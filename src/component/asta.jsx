@@ -8,8 +8,10 @@ const Asta = () => {
   return (
     <>
       <MyNavbar />
-      <Searchbar />
-      <Griglia />
+      <Container fluid>
+        <Searchbar />
+        <Griglia />
+      </Container>
     </>
   );
 };

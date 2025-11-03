@@ -4,8 +4,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import HomePage from "./component/homePage";
 import MyNavbar from "./component/myNavbar";
-import Asta from "./component/asta";
+
 import ImpostazioniAsta from "./component/impostazioniAsta";
+import Asta from "./component/Asta";
+import Strategia from "./component/Strategia";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
               element={<ImpostazioniAsta />}
             ></Route>
             <Route path="/asta" element={<Asta />} />
+            <Route path="/strategia" element={<Strategia />} />
           </Routes>
         </Container>
       </BrowserRouter>

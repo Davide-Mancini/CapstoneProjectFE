@@ -48,7 +48,9 @@ function MyNavbar() {
             <Link to={"/impostazioni-asta"} className=" nav-link">
               Asta
             </Link>
-            <Nav.Link href="#pricing">Strategia</Nav.Link>
+            <Link to={"/strategia"} className=" nav-link">
+              Strategia
+            </Link>
             <Nav.Link href="#pricing">Campetto</Nav.Link>
             <NavDropdown title="Lista Giocatori" id="collapsible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">
