@@ -1,0 +1,8 @@
+.logout:hover {
+  background-color: crimson !important;
+  font-size: 1.1em;
+  color: white;
+}
+.dropstart .dropdown-toggle::before {
+  display: none;
+}
