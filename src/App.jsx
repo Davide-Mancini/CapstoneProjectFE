@@ -6,10 +6,17 @@ import HomePage from "./component/homePage";
 import MyNavbar from "./component/myNavbar";
 
 import ImpostazioniAsta from "./component/impostazioniAsta";
-import Asta from "./component/Asta";
+import Asta from "./component/asta";
 import Strategia from "./component/Strategia";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { checkAuth } from "./redux/actions/checkAuth";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
   return (
     <>
       <BrowserRouter>

@@ -1,8 +1,6 @@
 import { SIGN_IN } from "../actions/signInAction";
 
 const initialState = {
-  email: "",
-  password: "",
   signIn: false,
   user: null,
 };

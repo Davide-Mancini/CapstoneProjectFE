@@ -91,7 +91,7 @@ function MyNavbar() {
                     className=" text-center me-3 "
                     title={
                       <h6>
-                        Ciao, <span className=" fw-bold"> {user.nome}</span>
+                        Ciao, <span className=" fw-bold"> {user?.nome}</span>
                       </h6>
                     }
                     drop="start"
