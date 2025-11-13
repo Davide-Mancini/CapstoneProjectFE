@@ -2,6 +2,7 @@ import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import PlayerColumn from "./playerColumn";
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import { useSelector } from "react-redux";
+import "../style/griglia.css";
 
 const Griglia = () => {
   const dettagliAsta = useSelector((state) => state.astaById.asta);
@@ -20,7 +21,10 @@ const Griglia = () => {
 
   return (
     <>
-      <Container className=" overflow-x-auto flex-nowrap" fluid>
+      <Container
+        className=" overflow-x-auto flex-nowrap bg-dark rounded-5"
+        fluid
+      >
         <Row className=" flex-nowrap">
           {utentiGiocatori.map((singoloUtente, index) => (
             <PlayerColumn

@@ -1,7 +1,7 @@
 import { Button, Col, Container, Form, ListGroup, Row } from "react-bootstrap";
 import "../style/searchbar.css";
 import { useEffect, useState } from "react";
-import { HourglassSplit } from "react-bootstrap-icons";
+import { Coin, HourglassSplit } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCalciatoriAction } from "../redux/actions/getAllCalciatori";
 import { useParams } from "react-router-dom";
@@ -66,7 +66,7 @@ const Searchbar = ({
   // };
 
   const [isRunning, setIsRunning] = useState(false);
-
+  const [cliccato, setCliccato] = useState(false);
   useEffect(() => {
     if (!isRunning) return;
     const interval = setInterval(() => {
@@ -108,11 +108,12 @@ const Searchbar = ({
   console.log("timeeeeeeeer", timer);
   return (
     <>
-      <Container fluid className=" mt-4">
+      <Container fluid className=" mt-4 bg-warning rounded-5">
         <Row>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={8} className=" mb-5 px-5">
             <Form className="d-flex margine">
               <div className=" d-flex flex-column w-100">
+                <h1>Cerca Giocatore</h1>
                 <Form.Control
                   type="search"
                   placeholder="Cerca giocatore"
@@ -133,6 +134,7 @@ const Searchbar = ({
                             ...filters,
                             cognome: calciatore.cognome,
                           });
+                          setCliccato(true);
                         }}
                       >
                         {calciatore?.cognome}
@@ -142,42 +144,70 @@ const Searchbar = ({
                 </ListGroup>
               </div>
             </Form>
-            <Row className=" text-center">
-              <h1>
-                <HourglassSplit />
-                {timer !== null ? (
-                  <div> {timer}</div>
-                ) : (
-                  <div>
-                    {" "}
-                    <p>10finto</p>{" "}
-                  </div>
-                )}
-              </h1>
-            </Row>
-            <Row className=" mt-2 text-center">
-              <h1>{calciatoreSelezionato.nomeCompleto}</h1>
-              <div>Offerta Attuale: {offertaAttuale}</div>
-              <Button onClick={sendOfferta}>INVIA OFFERTA</Button>
-              <Button
-                onClick={() => {
-                  handleIniziaAsta();
-                  setTimer(10);
-                  setIsRunning(true);
-                  // dispatch(
-                  //   astaCalciatoreAction(
-                  //     calciatoreSelezionato.id,
-                  //     dettagliAstaRecuperata.id
-                  //   )
-                  // );
-                }}
-              >
-                {" "}
-                Inizia asta
-              </Button>
-            </Row>
-            <Row className=" d-flex justify-content-evenly mt-3 ">
-              <Button
+            {cliccato && (
+              <Row className=" text-center d-flex justify-content-center">
+                <div className=" me-2 d-flex justify-content-center align-items-center my-3 bg-dark p-2 rounded-pill w-25 border border-3 border-white">
+                  <HourglassSplit className=" fs-1 text-white me-2" />
+                  <h1 className=" m-0 text-white">
+                    {timer !== null ? (
+                      <div> {timer}</div>
+                    ) : (
+                      <div>
+                        {" "}
+                        <p className=" m-0">10</p>{" "}
+                      </div>
+                    )}
+                  </h1>
+                </div>
+                <div className=" ms-2 d-flex justify-content-center align-items-center my-3 bg-dark p-2 rounded-pill w-25 border border-3 border-white">
+                  <Coin className=" fs-1 text-warning me-2" />{" "}
+                  <h1 className=" m-0 text-white">{offertaAttuale}</h1>{" "}
+                </div>
+              </Row>
+            )}
+            {cliccato && (
+              <Row className=" mt-2 text-center">
+                <Button
+                  className=" text-warning fs-5"
+                  variant="dark"
+                  onClick={() => {
+                    handleIniziaAsta();
+                    setTimer(10);
+                    setIsRunning(true);
+                    // dispatch(
+                    //   astaCalciatoreAction(
+                    //     calciatoreSelezionato.id,
+                    //     dettagliAstaRecuperata.id
+                    //   )
+                    // );
+                  }}
+                >
+                  {" "}
+                  INIZIA ASTA
+                </Button>
+                <Button onClick={sendOfferta} className=" my-3">
+                  INVIA OFFERTA
+                </Button>
+              </Row>
+            )}
+            {cliccato && (
+              <Row className=" d-flex justify-content-evenly mt-3 ">
+                <button className="pushable w-25" onClick={offerta1}>
+                  <span className="shadow"></span>
+                  <span className="edge"></span>
+                  <span className="front"> +1 </span>
+                </button>
+                <button className="pushable w-25" onClick={offerta5}>
+                  <span className="shadow"></span>
+                  <span className="edge"></span>
+                  <span className="front"> +1 </span>
+                </button>
+                <button className="pushable w-25" onClick={offerta10}>
+                  <span className="shadow"></span>
+                  <span className="edge"></span>
+                  <span className="front"> +1 </span>
+                </button>
+                {/* <Button
                 className=" border-0 w-25 fs-5 bg-info"
                 onClick={offerta1}
               >
@@ -194,11 +224,26 @@ const Searchbar = ({
                 onClick={offerta10}
               >
                 +10
-              </Button>
-            </Row>
+              </Button> */}
+              </Row>
+            )}
           </Col>
-          <Col xs={12} md={4}>
-            <img src={calciatoreSelezionato.immagineUrl} alt="" />
+          <Col
+            xs={12}
+            md={4}
+            className=" d-flex h-100 justify-content-center my-auto flex-column "
+          >
+            <div className=" mx-auto ">
+              <img
+                src={
+                  calciatoreSelezionato.immagineUrl ||
+                  "https://content.fantacalcio.it/web/campioncini/20/card/6677.png?v=341"
+                }
+                alt=""
+                className=" d-block mx-auto h-100"
+              />
+              <h1>{calciatoreSelezionato.nomeCompleto}</h1>
+            </div>
           </Col>
         </Row>
       </Container>
