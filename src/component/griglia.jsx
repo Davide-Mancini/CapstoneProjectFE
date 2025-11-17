@@ -3,6 +3,7 @@ import PlayerColumn from "./playerColumn";
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import { useSelector } from "react-redux";
 import "../style/griglia.css";
+import { useEffect } from "react";
 
 const Griglia = () => {
   const dettagliAsta = useSelector((state) => state.astaById.asta);
@@ -12,6 +13,16 @@ const Griglia = () => {
     name: utente.username,
     crediti: dettagliAsta?.crediti,
   }));
+  console.log("lista utenti", utentiGiocatori);
+  const ultimoAcquisto = useSelector(
+    (state) => state.astaTerminata.ultimoAcquisto
+  );
+  console.log("ultimoAcquisto", ultimoAcquisto);
+  useEffect(() => {
+    if (ultimoAcquisto) {
+      console.log("Aggiorno griglia con:", ultimoAcquisto);
+    }
+  }, [ultimoAcquisto]);
   if (!dettagliAsta) {
     return <p>Caricamento griglia...</p>;
   }
@@ -31,6 +42,7 @@ const Griglia = () => {
               key={index}
               nomeUtente={singoloUtente.name}
               crediti={singoloUtente.crediti}
+              ultimoAcquisto={ultimoAcquisto}
             />
           ))}
         </Row>

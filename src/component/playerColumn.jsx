@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import { ArrowBarDown, ArrowBarUp, Coin } from "react-bootstrap-icons";
 import "../style/playerColumn.css";
-const PlayerColumn = ({ nomeUtente, crediti }) => {
+const PlayerColumn = ({ nomeUtente, crediti, ultimoAcquisto }) => {
   // Stato iniziale per i ruoli
   const [countP, setCountP] = useState(3);
   const [countD, setCountD] = useState(8);
@@ -32,10 +32,34 @@ const PlayerColumn = ({ nomeUtente, crediti }) => {
       colorClass: "bg-danger text-light  justify-content-start",
     },
   ];
-
   // Stato per lo stile delle freccie per dimnuire o aumentare le caselle
   const [sizeArrow1, setSizeArrow1] = useState("fs-3");
   const [sizeArrow2, setSizeArrow2] = useState("");
+  // Stato per le caselle con giocatori acquistati
+  const [caselle, setCaselle] = useState({
+    P: Array(3).fill(null),
+    D: Array(8).fill(null),
+    C: Array(8).fill(null),
+    A: Array(6).fill(null),
+  });
+  useEffect(() => {
+    if (!ultimoAcquisto) return;
+
+    if (ultimoAcquisto.vincitore === nomeUtente) {
+      const ruolo = ultimoAcquisto.ruolo;
+      setCaselle((prev) => {
+        const nuovoRuoloArray = [...prev[ruolo]];
+        const index = nuovoRuoloArray.findIndex((c) => c === null);
+        if (index !== -1) {
+          nuovoRuoloArray[index] = {
+            nome: ultimoAcquisto.calciatore,
+            prezzo: ultimoAcquisto.prezzo,
+          };
+        }
+        return { ...prev, [ruolo]: nuovoRuoloArray };
+      });
+    }
+  }, [ultimoAcquisto, nomeUtente]);
 
   return (
     <>
@@ -55,10 +79,10 @@ const PlayerColumn = ({ nomeUtente, crediti }) => {
         </div>
         {/* Questa parte sotto va ripetuta per quanti sono i ruoli 3P, 8D, 8C, 6A */}
         {roles.map(({ role, count, colorClass }) =>
-          Array.from({ length: count }, (_, index) => (
-            <div key={index}>
+          caselle[role].slice(0, count).map((casella, index) => (
+            <div key={role + index}>
               {index === 0 && (
-                <div key={index} className=" text-center">
+                <div className=" text-center">
                   <div>
                     <div className={`rounded-3 p-0 m-0 ${colorClass} d-flex `}>
                       <span className=" text-white ms-1">{role}</span>
@@ -94,10 +118,18 @@ const PlayerColumn = ({ nomeUtente, crediti }) => {
                 </div>
               )}
               <Row className=" d-flex trasparente p-2 ">
-                <Form.Control className=" bg-transparent border-0 shadow-none text-light" />
+                <Form.Control
+                  className=" bg-transparent border-0 shadow-none text-light"
+                  value={casella ? casella.nome : ""}
+                  readOnly
+                />
                 <InputGroup className="mb-3 p-0">
                   <InputGroup.Text className=" ">FM</InputGroup.Text>
-                  <Form.Control className=" shadow-none border-0" />
+                  <Form.Control
+                    className=" shadow-none border-0"
+                    value={casella ? casella.prezzo : ""}
+                    readOnly
+                  />
                 </InputGroup>
               </Row>
             </div>

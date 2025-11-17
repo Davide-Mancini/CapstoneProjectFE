@@ -11,6 +11,7 @@ import SockJS from "sockjs-client";
 import Stomp, { over } from "stompjs";
 import { addUserToAstaAction } from "../redux/actions/addUserToAstaAction";
 import { getAstaCalciatoreById } from "../redux/actions/getAstaCalciatoreByid";
+import { astaTerminataAction } from "../redux/actions/astaTerminataAction";
 
 const Asta = () => {
   // dichiaro dispatch per poter usare lo useDispatch
@@ -92,27 +93,18 @@ const Asta = () => {
           setAstaCalciatore(nuovaAsta);
         }
       );
+      if (!astaCalciatore?.id) return;
       client.subscribe(
-        `/topic/asta-terminata/${dettagliAstaRecuperata.id}`,
+        `/topic/asta-terminata/${astaCalciatore.id}`,
         (message) => {
           const data = JSON.parse(message.body);
-
+          dispatch(astaTerminataAction(data));
           console.log("ASTA TERMINATA RICEVUTA:", data);
           if (data.sessioneAstaId === dettagliAstaRecuperata.id) {
             alert(
               `${data.calciatore} assegnato a ${data.vincitore} per ${data.prezzo} crediti!`
             );
-            setAstaCalciatore(null);
-            setOffertaAttuale(1);
-            setCalciatoreSelezionato({});
-            setOfferente(null);
           }
-
-          // Resetta tutto per la prossima asta
-          setAstaCalciatore(null);
-          setOffertaAttuale(1);
-          setCalciatoreSelezionato({});
-          setOfferente(null);
         }
       );
       // client.subscribe(
@@ -131,7 +123,7 @@ const Asta = () => {
         console.log("WebSocket disconnesso");
       }
     };
-  }, [dettagliAstaRecuperata?.id, user?.id]);
+  }, [dettagliAstaRecuperata?.id, user?.id, astaCalciatore?.id]);
 
   //Funzioni per gestire le offerte
   const handleOfferta1 = () => {

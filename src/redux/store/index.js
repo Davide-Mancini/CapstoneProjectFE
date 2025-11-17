@@ -9,6 +9,7 @@ import { getAstaByIdReducer } from "../reducers/getAstaByIdReducer";
 import { addUserToAstaReducer } from "../reducers/addUserToAstaReducer";
 import { astaCalciatoreReducer } from "../reducers/astaCalciatoreReducer";
 import { getAstaCalciatoreByIdReducer } from "../reducers/getAstaCalciatoreByIdReducer";
+import { astaTerminataReducer } from "../reducers/astaTerminataReducer";
 
 const combineReducer = combineReducers({
   news: newsReducer,
@@ -21,6 +22,7 @@ const combineReducer = combineReducers({
   addUserToAsta: addUserToAstaReducer,
   astaCalciatore: astaCalciatoreReducer,
   astaCalciatoreById: getAstaCalciatoreByIdReducer,
+  astaTerminata: astaTerminataReducer,
 });
 
 const store = configureStore({
