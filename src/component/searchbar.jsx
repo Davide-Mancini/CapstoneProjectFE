@@ -122,6 +122,7 @@ const Searchbar = ({
   console.log("timeeeeeeeer", timer);
   console.log("ASTA CALCIATOREEEE", astaCalciatore);
   console.log("Calciatoreee", calciatoreSelezionato);
+
   return (
     <>
       <Container fluid className=" mt-4 bg-warning rounded-5">
@@ -194,27 +195,26 @@ const Searchbar = ({
             )}
             {Object.keys(calciatoreSelezionato).length !== 0 && (
               <Row className=" mt-2 text-center">
-                {!astaCalciatore?.statoAsta === "APERTA" ||
-                  (!astaCalciatore && (
-                    <Button
-                      className=" text-warning fs-5"
-                      variant="dark"
-                      onClick={() => {
-                        handleIniziaAsta();
-                        setTimer(10);
-                        setIsRunning(true);
-                        // dispatch(
-                        //   astaCalciatoreAction(
-                        //     calciatoreSelezionato.id,
-                        //     dettagliAstaRecuperata.id
-                        //   )
-                        // );
-                      }}
-                    >
-                      {" "}
-                      INIZIA ASTA
-                    </Button>
-                  ))}
+                {astaCalciatore?.statoAsta !== "APERTA" && (
+                  <Button
+                    className=" text-warning fs-5"
+                    variant="dark"
+                    onClick={() => {
+                      handleIniziaAsta();
+                      setTimer(10);
+                      setIsRunning(true);
+                      // dispatch(
+                      //   astaCalciatoreAction(
+                      //     calciatoreSelezionato.id,
+                      //     dettagliAstaRecuperata.id
+                      //   )
+                      // );
+                    }}
+                  >
+                    {" "}
+                    INIZIA ASTA
+                  </Button>
+                )}
 
                 <Button onClick={sendOfferta} className=" my-3">
                   INVIA OFFERTA

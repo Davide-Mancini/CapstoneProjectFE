@@ -99,6 +99,7 @@ const Asta = () => {
         (message) => {
           const data = JSON.parse(message.body);
           dispatch(astaTerminataAction(data));
+          dispatch(setAstaCalciatore(null));
           console.log("ASTA TERMINATA RICEVUTA:", data);
           if (data.sessioneAstaId === dettagliAstaRecuperata.id) {
             alert(

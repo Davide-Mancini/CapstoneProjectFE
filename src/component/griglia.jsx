@@ -10,6 +10,7 @@ const Griglia = () => {
   console.log("Griglia monntata ", dettagliAsta);
   // Definisco gli utenti (giocatori) recuperandoli dallo stato della chiamata
   const utentiGiocatori = (dettagliAsta?.utenti || []).map((utente) => ({
+    id: utente.id,
     name: utente.username,
     crediti: dettagliAsta?.crediti,
   }));
@@ -43,6 +44,7 @@ const Griglia = () => {
               nomeUtente={singoloUtente.name}
               crediti={singoloUtente.crediti}
               ultimoAcquisto={ultimoAcquisto}
+              utenteId={singoloUtente.id}
             />
           ))}
         </Row>
