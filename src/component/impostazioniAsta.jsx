@@ -21,6 +21,7 @@ const ImpostazioniAsta = () => {
 
   const user = useSelector((state) => state.signIn.user);
   const listaAste = user?.sessioni;
+
   return (
     <>
       <MyNavbar />

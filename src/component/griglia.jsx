@@ -6,7 +6,7 @@ import "../style/griglia.css";
 import { useEffect } from "react";
 
 const Griglia = () => {
-  const dettagliAsta = useSelector((state) => state.astaById.asta);
+  const dettagliAsta = useSelector((state) => state.addUserToAsta.asta);
   console.log("Griglia monntata ", dettagliAsta);
   // Definisco gli utenti (giocatori) recuperandoli dallo stato della chiamata
   const utentiGiocatori = (dettagliAsta?.utenti || []).map((utente) => ({
@@ -27,7 +27,7 @@ const Griglia = () => {
   if (!dettagliAsta) {
     return <p>Caricamento griglia...</p>;
   }
-  if (!dettagliAsta.utenti?.length) {
+  if (!utentiGiocatori?.length) {
     return <p>In attesa che gli utenti entrino...</p>;
   }
 

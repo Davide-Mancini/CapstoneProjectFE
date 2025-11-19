@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import SockJS from "sockjs-client";
 import Stomp, { over } from "stompjs";
-import { addUserToAstaAction } from "../redux/actions/addUserToAstaAction";
 import { getAstaCalciatoreById } from "../redux/actions/getAstaCalciatoreByid";
 import { astaTerminataAction } from "../redux/actions/astaTerminataAction";
+import { addUserToAstaAction } from "../redux/actions/addUserToAstaAction";
 
 const Asta = () => {
   // dichiaro dispatch per poter usare lo useDispatch
@@ -27,6 +27,8 @@ const Asta = () => {
   }, [id, dispatch]);
   //Recupero i dettagli dell'asta dallo store di redux
   const dettagliAstaRecuperata = useSelector((state) => state.astaById.asta);
+  console.log("Dettagli Asta:", dettagliAstaRecuperata);
+  console.log("Utenti nella sessione:", dettagliAstaRecuperata?.utenti);
   useEffect(() => {
     console.log("dettagliAstaRecuperata cambiato:", dettagliAstaRecuperata);
   }, [dettagliAstaRecuperata]);
@@ -93,6 +95,12 @@ const Asta = () => {
           setAstaCalciatore(nuovaAsta);
         }
       );
+      client.subscribe(`/topic/utente-entrato/${astaId}`, (message) => {
+        const utenteEntrato = JSON.parse(message.body);
+        console.log("Utente entrato:", utenteEntrato);
+        dispatch(addUserToAstaAction(utenteEntrato));
+      });
+      // dispatch(addUserToAstaAction(astaId, user.id));
       if (!astaCalciatore?.id) return;
       client.subscribe(
         `/topic/asta-terminata/${astaCalciatore.id}`,
@@ -108,23 +116,34 @@ const Asta = () => {
           }
         }
       );
-      // client.subscribe(
-      //   `/topic/utente-entrato/${astaId}/${user.id}`,
-      //   (message) => {
-      //     const utenteEntrato = JSON.parse(message.body);
-      //     console.log("Utente entrato:", utenteEntrato);
-      //     dispatch(GetAstaByIdAction(astaId));
-      //   }
-      // );
     });
+
     setStompClient(client);
+    setTimeout(() => {
+      if (client.connected) {
+        const payload = {
+          id: user.id,
+          username: user.username,
+        };
+
+        console.log("🚀 Invio messaggio utente-entrato:", payload);
+        client.send(
+          `/app/utente-entrato/${dettagliAstaRecuperata.id}`,
+          {},
+          JSON.stringify(payload)
+        );
+      } else {
+        console.error("❌ Client non ancora connesso dopo timeout");
+      }
+    }, 100);
+
     return () => {
       if (client && client.connected) {
         client.disconnect();
         console.log("WebSocket disconnesso");
       }
     };
-  }, [dettagliAstaRecuperata?.id, user?.id, astaCalciatore?.id]);
+  }, [dettagliAstaRecuperata?.id, user?.id, astaCalciatore?.id, dispatch]);
 
   //Funzioni per gestire le offerte
   const handleOfferta1 = () => {
@@ -135,6 +154,9 @@ const Asta = () => {
   };
   const handleOfferta10 = () => {
     setOfferta(offertaAttuale + 10);
+  };
+  const azzeraOfferta = () => {
+    setOffertaAttuale(0);
   };
   //Invio dell'offerta tramite stomp
   const sendOfferta = () => {
@@ -165,13 +187,39 @@ const Asta = () => {
     }
   };
   //Qui viene aggiunto l'utente alla lista degli utenti di quella specifica asta
-  useEffect(() => {
-    if (user?.id && dettagliAstaRecuperata?.id) {
-      //DISPATCH DELLA CHIAMATA CHE REGISTRA UTENTE A ASTA
-      dispatch(addUserToAstaAction(dettagliAstaRecuperata.id, user.id));
-    }
-  }, [user?.id, dettagliAstaRecuperata?.id, dispatch]);
+  // useEffect(() => {
+  //   // Aspetta che TUTTO sia pronto
+  //   if (
+  //     !stompClient?.connected ||
+  //     !user?.id ||
+  //     !dettagliAstaRecuperata?.id ||
+  //     !dettagliAstaRecuperata?.utenti
+  //   ) {
+  //     return;
+  //   }
 
+  //   // Verifica se l'utente è già nella lista
+  //   const utenteGiaPresente = dettagliAstaRecuperata.utenti.some(
+  //     (u) => u.id === user.id
+  //   );
+
+  //   if (utenteGiaPresente) {
+  //     console.log("Utente già presente nell'asta");
+  //     return;
+  //   }
+
+  //   const payload = {
+  //     id: user.id,
+  //     username: user.username,
+  //   };
+
+  //   console.log("Invio messaggio utente-entrato", payload);
+  //   stompClient.send(
+  //     `/app/utente-entrato/${dettagliAstaRecuperata.id}`,
+  //     {},
+  //     JSON.stringify(payload)
+  //   );
+  // }, [stompClient?.connected, user?.id, dettagliAstaRecuperata]);
   const [calciatoreSelezionato, setCalciatoreSelezionato] = useState({});
   const handleSelezionaCalciatore = (calciatore) => {
     if (!stompClient?.connected) return;
@@ -225,6 +273,7 @@ const Asta = () => {
         {/* Passo le mie funzioni alla search bar tramite props */}
         <Searchbar
           offertaAttuale={offertaAttuale}
+          azzeraOfferta={azzeraOfferta}
           offerta1={handleOfferta1}
           offerta5={handleOfferta5}
           offerta10={handleOfferta10}
