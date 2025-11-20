@@ -79,16 +79,19 @@ const ImpostazioniAsta = () => {
             </Button>
           </Col>
           <Col xs={12} md={4}>
-            <h1 className=" text-center fw-bolder text-black">ACCEDI ASTE</h1>
+            <h1 className=" text-center fw-bolder text-black">LE TUE ASTE</h1>
             <hr />
             {listaAste ? (
-              <ul className="text-center">
+              <ul className="text-center overflow-y-scroll h-25">
                 {listaAste?.map((asta, index) => (
                   <a
                     href={`http://localhost:5173/sessioniAsta/${asta.id}`}
                     key={index}
+                    className=" list-unstyled text-decoration-none text-light"
                   >
-                    <li key={index}>{asta.nome_asta}</li>
+                    <li key={index} className=" bg-dark my-1 rounded-3  ">
+                      {asta.nome}
+                    </li>
                   </a>
                 ))}
               </ul>

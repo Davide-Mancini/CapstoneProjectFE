@@ -70,7 +70,13 @@ const SignInButton = () => {
           <Button variant="secondary" onClick={handleClose}>
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleSignIn} type="submit">
+          <Button
+            variant="primary"
+            onClick={() => {
+              handleSignIn();
+            }}
+            type="submit"
+          >
             Accedi
           </Button>
         </Modal.Footer>
