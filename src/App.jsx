@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Container fluid>
+        <Container fluid className=" bg-dark">
           <Routes>
             <Route path="/listacalciatori" element={<ListaGiocatori />} />
             <Route path="/" element={<HomePage />} />

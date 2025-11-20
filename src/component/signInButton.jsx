@@ -29,8 +29,8 @@ const SignInButton = () => {
   return (
     <>
       <Button
-        variant="outline-dark"
-        className=" me-1 mt-1 border-3"
+        variant="warning"
+        className=" me-1 mt-3 border-3 rounded-pill"
         onClick={handleShow}
       >
         Accedi
