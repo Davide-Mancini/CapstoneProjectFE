@@ -2,96 +2,96 @@ const MyFooter = () => {
   const anno = new Date();
   return (
     <>
-      <div className="container mt-auto ">
+      <div className="container mt-auto text-light">
         <footer className="py-5">
-          <div className="row">
+          <div className="row ">
             <div className="col-6 col-md-2 mb-3">
               <h5>Section</h5>
               <ul className="nav flex-column">
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                <li className="nav-item mb-2 ">
+                  <a href="#" className="nav-link p-0 text-light">
                     Home
                   </a>
                 </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                <li className="nav-item mb-2 ">
+                  <a href="#" className="nav-link p-0 text-light">
                     Features
                   </a>
                 </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                <li className="nav-item mb-2 ">
+                  <a href="#" className="nav-link p-0 text-light">
                     Pricing
                   </a>
                 </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                <li className="nav-item mb-2 ">
+                  <a href="#" className="nav-link p-0 text-light">
                     FAQs
                   </a>
                 </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                <li className="nav-item mb-2 ">
+                  <a href="#" className="nav-link p-0 text-light">
                     About
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div className="col-6 col-md-2 mb-3">
+            <div className="col-6 col-md-2 mb-3  text-light">
               <h5>Section</h5>
               <ul className="nav flex-column">
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Home
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Features
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Pricing
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     FAQs
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     About
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div className="col-6 col-md-2 mb-3">
+            <div className="col-6 col-md-2 mb-3 text-light">
               <h5>Section</h5>
               <ul className="nav flex-column">
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Home
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Features
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     Pricing
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     FAQs
                   </a>
                 </li>
                 <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0 text-muted">
+                  <a href="#" className="nav-link p-0  text-light">
                     About
                   </a>
                 </li>
@@ -115,7 +115,10 @@ const MyFooter = () => {
                     className="form-control"
                     placeholder="Email"
                   />
-                  <button className="btn btn-primary" type="button">
+                  <button
+                    className="btn btn-warning text-white fw-bold"
+                    type="button"
+                  >
                     Iscriviti
                   </button>
                 </div>

@@ -13,6 +13,8 @@ import { useEffect } from "react";
 import { checkAuth } from "./redux/actions/checkAuth";
 import { Profile } from "./component/profile";
 import { ListaGiocatori } from "./component/listaGiocatori";
+import "./component/FuzzyText/FuzzyText/FuzzyText";
+import NotFoundPage from "./component/notFoundPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ function App() {
             <Route path="/sessioniAsta/:id" element={<Asta />} />
             <Route path="/strategia" element={<Strategia />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Container>
       </BrowserRouter>

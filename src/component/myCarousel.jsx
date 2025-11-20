@@ -20,7 +20,7 @@ function Mycarousel() {
   return (
     <Container className=" border rounded-5 text-light my-5 gradienteDiSfondo ">
       <Row>
-        <Col xs={3}>
+        <Col xs={12} md={3}>
           <iframe
             id="sofa-standings-embed-33-76457"
             src="https://widgets.sofascore.com/it/embed/tournament/33/season/76457/standings/Serie%20A%2025%2F26?widgetTitle=Serie%20A%2025%2F26&showCompetitionLogo=true"
@@ -28,7 +28,7 @@ function Mycarousel() {
             className=" overflow-x-auto p-4 "
           ></iframe>
         </Col>
-        <Col xs={9}>
+        <Col xs={12} md={9}>
           <Carousel fade className=" w-100 mx-auto p-4">
             {news.map((singleNews, id) => (
               <Carousel.Item interval={7000} key={id}>

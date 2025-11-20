@@ -4,6 +4,7 @@ import MyNavbar from "./myNavbar";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { creaAstaAction } from "../redux/actions/creaAstaAction";
+import PillNav from "./PillNav/PillNav";
 
 const ImpostazioniAsta = () => {
   const dispatch = useDispatch();
@@ -24,9 +25,27 @@ const ImpostazioniAsta = () => {
 
   return (
     <>
-      <MyNavbar />
-      <Container fluid className=" p-5 m-5 mx-auto">
-        <Row>
+      <Container fluid className=" p-5 mx-auto">
+        <div className=" d-flex justify-content-center">
+          <PillNav
+            logo={"src/assets/fire.svg"}
+            logoAlt="Company Logo"
+            items={[
+              { label: "ASTA", href: "/impostazioni-asta" },
+              { label: "STRATEGIA", href: "/strategia" },
+              { label: "CAMPETTO", href: "/campetto" },
+              { label: "PROFILO", href: "/profile" },
+            ]}
+            activeHref="/"
+            className="custom-nav"
+            ease="power2.easeOut"
+            baseColor="#dda60eff"
+            pillColor="#212529"
+            hoveredPillTextColor="#ffffff"
+            pillTextColor="#fcf9f9ff"
+          />
+        </div>
+        <Row className=" mt-4">
           {user ? (
             <Col xs={12} md={8} className=" bg-dark rounded-3">
               <h1 className=" text-center fw-bolder text-warning">

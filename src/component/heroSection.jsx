@@ -31,7 +31,7 @@ const HeroSection = () => {
             <TextType
               text={[
                 "Il nuovo tool per la gestione della tua asta!",
-                "Facile! Veloce!",
+                "Facile! Veloce! Intuitivo!",
                 "Inizia a rilanciare!",
               ]}
               typingSpeed={125}
@@ -48,13 +48,13 @@ const HeroSection = () => {
             <div className="d-grid gap-2 d-md-flex justify-content-md-center">
               <button
                 type="button"
-                className="btn btn-warning btn-lg px-4 me-md-2 text-light fw-bold"
+                className="btn btn-warning rounded-pill btn-lg px-4 me-md-2 text-light fw-bold"
               >
                 Inizia Asta
               </button>
               <button
                 type="button"
-                className="btn btn-outline-secondary btn-lg px-4"
+                className="btn btn-outline-secondary rounded-pill btn-lg px-4"
               >
                 Come Funziona
               </button>

@@ -7,6 +7,7 @@ import { Pencil } from "react-bootstrap-icons";
 import "../style/profile.css";
 import { uploadImg } from "../redux/actions/uploadImgActions";
 import { Link } from "react-router-dom";
+import PillNav from "./PillNav/PillNav";
 export const Profile = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,10 +28,27 @@ export const Profile = () => {
   const listaAste = user?.sessioni;
   return (
     <>
-      <Container fluid className=" mt-5 pt-5 bg-dark">
-        <MyNavbar />
-
-        <Row>
+      <Container fluid className="  pt-5 bg-dark">
+        <div className=" d-flex justify-content-center">
+          <PillNav
+            logo={"src/assets/fire.svg"}
+            logoAlt="Company Logo"
+            items={[
+              { label: "ASTA", href: "/impostazioni-asta" },
+              { label: "STRATEGIA", href: "/strategia" },
+              { label: "CAMPETTO", href: "/campetto" },
+              { label: "PROFILO", href: "/profile" },
+            ]}
+            activeHref="/"
+            className="custom-nav"
+            ease="power2.easeOut"
+            baseColor="#dda60eff"
+            pillColor="#212529"
+            hoveredPillTextColor="#ffffff"
+            pillTextColor="#fcf9f9ff"
+          />
+        </div>
+        <Row className=" mt-4">
           <Col md={2}>
             <h3>Sidebar</h3>
           </Col>
