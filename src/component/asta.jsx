@@ -53,7 +53,7 @@ const Asta = () => {
   }, [user]);
   //Inizio ad impostare il mio WebSocket definendo stato locale per stompClient
   const [stompClient, setStompClient] = useState(null);
-  const [offertaAttuale, setOffertaAttuale] = useState(1);
+  const [offertaAttuale, setOffertaAttuale] = useState(0);
   const [astaCalciatore, setAstaCalciatore] = useState(null);
   const [offerente, setOfferente] = useState(null);
   console.log("ASTAAAAA", astaCalciatore);

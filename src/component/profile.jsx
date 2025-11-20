@@ -27,7 +27,7 @@ export const Profile = () => {
   const listaAste = user?.sessioni;
   return (
     <>
-      <Container fluid className=" mt-5">
+      <Container fluid className=" mt-5 pt-5 bg-dark">
         <MyNavbar />
 
         <Row>
@@ -35,7 +35,7 @@ export const Profile = () => {
             <h3>Sidebar</h3>
           </Col>
           <Col md={6}>
-            <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "30rem" }}>
               <Card.Img variant="top" src={imageSrc} />
 
               <Form.Group controlId="formFile" className="mb-3 ">
@@ -49,21 +49,27 @@ export const Profile = () => {
                 <Card.Text className=" text-center mt-0">
                   ({user?.username})
                 </Card.Text>
-                <Card.Text className=" text-center">ASTE ATTIVE</Card.Text>
-                <Button variant="primary">Go somewhere</Button>
+
+                <div className=" d-flex justify-content-around ">
+                  <Button variant="warning">Modifica Profilo</Button>
+                  <Button variant="danger">Elimina Profilo</Button>
+                </div>
               </Card.Body>
             </Card>
           </Col>
           {/* INSERISCO LA LISTA DELLE ASTE DELL'UTENTE LOGGATO */}
-          <Col md={4}>
-            <h2>LE TUE ASTE</h2>
-            <ul>
+          <Col md={4} className=" bg-warning rounded-3">
+            <h2 className=" text-center">LE TUE ASTE</h2>
+            <ul className="overflow-y-scroll h-25 text-center">
               {listaAste?.map((asta, index) => (
                 <a
                   href={`http://localhost:5173/sessioniAsta/${asta.id}`}
                   key={index}
+                  className=" list-unstyled text-decoration-none text-light"
                 >
-                  <li>{asta.nome}</li>
+                  <li className=" bg-dark my-1 rounded-3 mx-1  ">
+                    {asta.nome}
+                  </li>
                 </a>
               ))}
             </ul>

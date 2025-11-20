@@ -40,7 +40,7 @@ function MyNavbar() {
     <Navbar
       collapseOnSelect
       expand="lg"
-      className="bg-body-tertiary fw-medium "
+      className=" fw-medium w-50 rounded-5 mx-auto mt-2 bg-dark"
       fixed="top"
     >
       <Container fluid className=" m-0">
@@ -94,6 +94,7 @@ function MyNavbar() {
                   )}
 
                   <DropdownButton
+                    variant="warning"
                     className=" text-center me-3 "
                     title={
                       <h6>
@@ -102,7 +103,7 @@ function MyNavbar() {
                       </h6>
                     }
                     drop="start"
-                    showCaret={false}
+                    // showCaret={false}
                   >
                     <Link className=" dropdown-item" to={"/profile"}>
                       Profilo

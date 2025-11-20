@@ -26,7 +26,7 @@ const HeroSection = () => {
             </h1>
             <p className=" lead">
               Organizza la tua asta nel modo perfetto, con AstaTool puoi gestire
-              la tua asta online.
+              la tua asta online
             </p>
             <div className="d-grid gap-2 d-md-flex justify-content-md-center">
               <button

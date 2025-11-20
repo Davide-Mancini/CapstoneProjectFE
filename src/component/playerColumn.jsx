@@ -26,7 +26,7 @@ const PlayerColumn = ({
     const caricaDatiIniziali = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/rosa/utente/${utenteId}/sessioni/${dettagliAsta.id}`
+          `http://localhost:3001/api/rosa/utente/${utenteId}/sessione/${dettagliAsta.id}`
         );
         const data = await response.json();
 
@@ -66,7 +66,7 @@ const PlayerColumn = ({
     if (utenteId) {
       caricaDatiIniziali();
     }
-  }, [utenteId]); // Esegue SOLO una volta all'avvio
+  }, [utenteId, dettagliAsta?.id]); // Esegue SOLO una volta all'avvio
 
   useEffect(() => {
     if (!ultimoAcquisto) return;

@@ -25,60 +25,81 @@ const ImpostazioniAsta = () => {
   return (
     <>
       <MyNavbar />
-      <Container className=" p-5 m-5">
+      <Container fluid className=" p-5 m-5 mx-auto">
         <Row>
-          <Col xs={12} md={8}>
-            <h1 className=" text-center fw-bolder text-black">
-              CREA NUOVA ASTA
-            </h1>
-            <hr />
-            <Col xs={12}>
-              <h2 className=" text-center">Quanti Fanta Allenatori?</h2>
-              <Form.Select
-                onChange={(e) => {
-                  setNAllenatori(e.target.value);
-                }}
-              >
-                <option value="6">6</option>
-                <option value="8">8</option>
-                <option value="10">10</option>
-                <option value="12">12</option>
-              </Form.Select>
-            </Col>
-            <Col xs={12}>
-              <h2 className=" text-center">Quanti Fanta Milioni?</h2>
-              <Form.Select
-                onChange={(e) => {
-                  setNCrediti(e.target.value);
-                }}
-              >
-                <option value="250">250</option>
-                <option value="300">300</option>
-                <option value="500">500</option>
-                <option value="1000">1000</option>
-              </Form.Select>
-            </Col>
-            <Col xs={12}>
-              <h2>Nome Asta</h2>
-              <Form.Control
-                type="text"
-                onChange={(e) => {
-                  setNome(e.target.value);
-                }}
-              ></Form.Control>
-            </Col>
+          {user ? (
+            <Col xs={12} md={8} className=" bg-dark rounded-3">
+              <h1 className=" text-center fw-bolder text-warning">
+                CREA NUOVA ASTA
+              </h1>
+              <hr />
+              <Col xs={12} className=" my-4 text-warning">
+                <h2>Quanti Fanta Allenatori?</h2>
+                <Form.Select
+                  className=" select trasparente shadow-none border-0 text-warning text-center"
+                  onChange={(e) => {
+                    setNAllenatori(e.target.value);
+                  }}
+                >
+                  <option className=" rounded-3" value="6">
+                    6
+                  </option>
+                  <option value="8">8</option>
+                  <option value="10">10</option>
+                  <option value="12">12</option>
+                </Form.Select>
+              </Col>
+              <Col xs={12} className="text-warning my-4">
+                <h2>Quanti Fanta Milioni?</h2>
+                <Form.Select
+                  className=" select trasparente shadow-none border-0 text-warning text-center "
+                  onChange={(e) => {
+                    setNCrediti(e.target.value);
+                  }}
+                >
+                  <option value="250">250</option>
+                  <option value="300">300</option>
+                  <option value="500">500</option>
+                  <option value="1000">1000</option>
+                </Form.Select>
+              </Col>
+              <Col xs={12} className="text-warning my-4">
+                <h2>Nome Asta</h2>
+                <Form.Control
+                  id="colorPlaceholder"
+                  placeholder="Nome Asta"
+                  className="trasparente  shadow-none border-0 text-warning text-center"
+                  type="text"
+                  onChange={(e) => {
+                    setNome(e.target.value);
+                  }}
+                ></Form.Control>
+              </Col>
 
-            <Button
-              variant="outline-success"
-              className=" border-3 mt-5 w-100"
-              onClick={() => {
-                dispatch(creaAstaAction(nome, nAllenatori, nCrediti, navigate));
-              }} /*onClick={()=>{chiamata post su tabella aste con stato di crediti e allenatori}}*/
-            >
-              Crea Asta
-            </Button>
-          </Col>
-          <Col xs={12} md={4}>
+              <Button
+                variant="outline-warning"
+                className=" border-3 mt-5 w-100"
+                onClick={() => {
+                  dispatch(
+                    creaAstaAction(nome, nAllenatori, nCrediti, navigate)
+                  );
+                }} /*onClick={()=>{chiamata post su tabella aste con stato di crediti e allenatori}}*/
+              >
+                Crea Asta
+              </Button>
+            </Col>
+          ) : (
+            <Col xs={12} md={8} className=" bg-dark rounded-3">
+              <h1 className=" text-center fw-bolder text-warning">
+                CREA NUOVA ASTA
+              </h1>
+              <hr />
+              <h2 className=" text-warning text-center">
+                Effettua login per creare una nuova asta
+              </h2>
+            </Col>
+          )}
+          <Col xs={12} md={4} className=" bg-warning rounded-3">
             <h1 className=" text-center fw-bolder text-black">LE TUE ASTE</h1>
             <hr />
             {listaAste ? (
@@ -89,7 +110,7 @@ const ImpostazioniAsta = () => {
                     key={index}
                     className=" list-unstyled text-decoration-none text-light"
                   >
-                    <li key={index} className=" bg-dark my-1 rounded-3  ">
+                    <li key={index} className=" bg-dark my-1 rounded-3 mx-1  ">
                       {asta.nome}
                     </li>
                   </a>
