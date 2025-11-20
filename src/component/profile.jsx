@@ -59,8 +59,11 @@ export const Profile = () => {
             <h2>LE TUE ASTE</h2>
             <ul>
               {listaAste?.map((asta, index) => (
-                <a href={`http://localhost:5173/sessioniAsta/${asta.id}`}>
-                  <li key={index}>{asta.nome_asta}</li>
+                <a
+                  href={`http://localhost:5173/sessioniAsta/${asta.id}`}
+                  key={index}
+                >
+                  <li>{asta.nome}</li>
                 </a>
               ))}
             </ul>

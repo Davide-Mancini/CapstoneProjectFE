@@ -24,6 +24,7 @@ function MyNavbar() {
   const signInState = useSelector((state) => {
     return state.signIn.isAuthenticated;
   });
+  console.log("stato signin", signInState);
   useEffect(() => {
     if (signInState) {
       setVisible(true);
@@ -111,14 +112,16 @@ function MyNavbar() {
                       Termini e Condizioni
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item
-                      className="logout text-center "
+                    <Link
+                      to={"/"}
+                      className=" dropdown-item logout text-center"
                       onClick={() => {
                         dispatch(Logout());
                       }}
                     >
+                      {" "}
                       Logout
-                    </NavDropdown.Item>
+                    </Link>
                   </DropdownButton>
                 </div>
               </>

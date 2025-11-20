@@ -1,3 +1,5 @@
+import { checkAuth } from "./checkAuth";
+
 export const SIGN_IN = "SIGN_IN_SUCCESS";
 export const signIn = (email, password) => {
   return async (dispatch) => {
@@ -24,6 +26,7 @@ export const signIn = (email, password) => {
           type: SIGN_IN,
           payload: data,
         });
+        dispatch(checkAuth());
       })
       .catch((err) => {
         alert("Errore nel login");

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { Coin, HourglassSplit } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCalciatoriAction } from "../redux/actions/getAllCalciatori";
-import { useParams } from "react-router-dom";
+
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 
 const Searchbar = ({
@@ -27,6 +27,7 @@ const Searchbar = ({
   astaCalciatore,
   offerente,
   handleFineAsta,
+  azzeraOfferta,
 }) => {
   const dispatch = useDispatch();
   //DEFINISCO IL FILTRO DA PASSARE AL MOMENTO DEL DISPATCH DEL'ACTION
@@ -37,13 +38,13 @@ const Searchbar = ({
     valore: "",
   });
 
-  const { id } = useParams();
-  useEffect(() => {
-    if (id) {
-      console.log("id del dispatch" + id);
-      dispatch(GetAstaByIdAction(id));
-    }
-  }, [id, dispatch]);
+  // const { id } = useParams();
+  // useEffect(() => {
+  //   if (id) {
+  //     console.log("id del dispatch" + id);
+  //     dispatch(GetAstaByIdAction(id));
+  //   }
+  // }, [id, dispatch]);
   const lista = useSelector((state) => state.calciatori.calciatori);
 
   //DISPATCHO L'ACTION PASSANDOGLI I FILTRI
@@ -122,7 +123,7 @@ const Searchbar = ({
   console.log("timeeeeeeeer", timer);
   console.log("ASTA CALCIATOREEEE", astaCalciatore);
   console.log("Calciatoreee", calciatoreSelezionato);
-
+  console.log("offerta attuale", offertaAttuale);
   return (
     <>
       <Container fluid className=" mt-4 bg-warning rounded-5">
@@ -163,6 +164,7 @@ const Searchbar = ({
                             cognome: calciatore.cognome,
                           });
                           setTimer(10);
+                          azzeraOfferta();
                         }}
                       >
                         {calciatore?.cognome}
@@ -190,6 +192,9 @@ const Searchbar = ({
                 <div className=" ms-2 d-flex justify-content-center align-items-center my-3 bg-dark p-2 rounded-pill w-25 border border-3 border-white">
                   <Coin className=" fs-1 text-warning me-2" />{" "}
                   <h1 className=" m-0 text-white">{offertaAttuale}</h1>{" "}
+                </div>
+                <div>
+                  <h3>{offerente}</h3>
                 </div>
               </Row>
             )}
