@@ -160,7 +160,8 @@ const Asta = () => {
     setOffertaAttuale(0);
   };
   //Invio dell'offerta tramite stomp
-  const sendOfferta = () => {
+  const sendOfferta = (valoreDiretto = null) => {
+    const valoreFinale = valoreDiretto !== null ? valoreDiretto : offerta;
     //Verifica prima di proseguire
     if (!stompClient || !stompClient.connected) {
       console.log("Stomp non connesso");
@@ -169,9 +170,9 @@ const Asta = () => {
 
     console.log("ECCO ID ASTA", astaCalciatore?.id);
     //Se sia l'offerta che l'username che l'id dell'asta calciatore sono settati allora posso creare l'offerta dell'asta, composta dall'offerta, l'id dell'utente che fa l'offerta e l'id dell'asta calciatore
-    if (offerta && username && astaCalciatore) {
+    if (valoreFinale && username && astaCalciatore) {
       const offertaAsta = {
-        valoreOfferta: offerta,
+        valoreOfferta: valoreFinale,
         offerente: user?.id,
         asta: astaCalciatore.id,
       };

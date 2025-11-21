@@ -26,12 +26,13 @@ import { getAllCalciatoriAction } from "../redux/actions/getAllCalciatori";
 
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import { Link } from "react-router-dom";
+import ElectricBorder from "./ElectricBorder/ElectricBorder/ElectricBorder";
 
 const Searchbar = ({
   offertaAttuale,
-  offerta1,
-  offerta5,
-  offerta10,
+  // offerta1,
+  // offerta5,
+  // offerta10,
   sendOfferta,
   calciatoreSelezionato,
   handleSelezionaCalciatore,
@@ -138,7 +139,12 @@ const Searchbar = ({
   console.log("Calciatoreee", calciatoreSelezionato);
   console.log("offerta attuale", offertaAttuale);
   const [show, setShow] = useState(false);
+  const inviaRapido = (incremento) => {
+    const base = parseInt(offertaAttuale) || 0;
+    const nuovoValore = base + incremento;
 
+    sendOfferta(nuovoValore);
+  };
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [copia, setCopia] = useState(false);
@@ -216,12 +222,13 @@ const Searchbar = ({
             </Button>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <Button variant="danger" onClick={handleClose}>
               Chiudi
             </Button>
           </Modal.Footer>
         </Modal>
       </div>
+
       <Container fluid className=" bg-warning rounded-5">
         <Row>
           {timer == 0 && (
@@ -257,7 +264,7 @@ const Searchbar = ({
                           handleSelezionaCalciatore(calciatore);
                           setFilters({
                             ...filters,
-                            cognome: calciatore.cognome,
+                            cognome: calciatore.cognome + " ",
                           });
                           setTimer(10);
                           azzeraOfferta();
@@ -273,7 +280,11 @@ const Searchbar = ({
             {Object.keys(calciatoreSelezionato).length !== 0 && (
               <Row className=" text-center d-flex justify-content-center">
                 <div className=" me-2 d-flex justify-content-center align-items-center my-3 bg-dark p-2 rounded-pill w-25 border border-3 border-white">
-                  <HourglassSplit className=" fs-1 text-white me-2" />
+                  <HourglassSplit
+                    className={`${
+                      timer < 9 && timer !== 0 ? "lampeggia" : ""
+                    } fs-1 text-white me-2`}
+                  />
                   <h1 className=" m-0 text-white">
                     {timer !== null ? (
                       <div> {timer}</div>
@@ -285,6 +296,7 @@ const Searchbar = ({
                     )}
                   </h1>
                 </div>
+
                 <div className=" ms-2 d-flex justify-content-center align-items-center my-3 bg-dark p-2 rounded-pill w-25 border border-3 border-white">
                   <Coin className=" fs-1 text-warning me-2" />{" "}
                   <h1 className=" m-0 text-white">{offertaAttuale}</h1>{" "}
@@ -317,24 +329,39 @@ const Searchbar = ({
                   </Button>
                 )}
 
-                <Button onClick={sendOfferta} className=" my-3">
+                {/* <Button onClick={sendOfferta} className=" my-3">
                   INVIA OFFERTA
-                </Button>
+                </Button> */}
               </Row>
             )}
             {Object.keys(calciatoreSelezionato).length !== 0 && (
               <Row className=" d-flex justify-content-evenly mt-3 ">
-                <button className="pushable w-25" onClick={offerta1}>
+                <button
+                  className="pushable w-25"
+                  onClick={() => {
+                    inviaRapido(1);
+                  }}
+                >
                   <span className="shadow"></span>
                   <span className="edge"></span>
                   <span className="front"> +1 </span>
                 </button>
-                <button className="pushable w-25" onClick={offerta5}>
+                <button
+                  className="pushable w-25"
+                  onClick={() => {
+                    inviaRapido(5);
+                  }}
+                >
                   <span className="shadow"></span>
                   <span className="edge"></span>
                   <span className="front"> +5 </span>
                 </button>
-                <button className="pushable w-25" onClick={offerta10}>
+                <button
+                  className="pushable w-25"
+                  onClick={() => {
+                    inviaRapido(10);
+                  }}
+                >
                   <span className="shadow"></span>
                   <span className="edge"></span>
                   <span className="front"> +10 </span>
