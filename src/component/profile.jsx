@@ -29,7 +29,7 @@ export const Profile = () => {
   const listaAste = user?.sessioni;
   return (
     <>
-      <Container fluid className="  pt-5 bg-dark">
+      <Container fluid className=" vh-100  pt-5 bg-dark">
         <div className=" d-flex justify-content-center">
           <PillNav
             logo={"src/assets/fire.svg"}

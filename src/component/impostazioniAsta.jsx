@@ -7,6 +7,8 @@ import { creaAstaAction } from "../redux/actions/creaAstaAction";
 import PillNav from "./PillNav/PillNav";
 import "./AnimatedList/AnimatedList/AnimatedList";
 import AnimatedList from "./AnimatedList/AnimatedList/AnimatedList";
+import SignInButton from "./signInButton";
+import RegisterButton from "./registerButton";
 const ImpostazioniAsta = () => {
   const dispatch = useDispatch();
   const [nAllenatori, setNAllenatori] = useState(0);
@@ -46,9 +48,9 @@ const ImpostazioniAsta = () => {
             pillTextColor="#fcf9f9ff"
           />
         </div>
-        <Row className=" mt-4">
+        <Row className=" vh-100 mt-4">
           {user ? (
-            <Col xs={12} md={8} className=" bg-dark rounded-3">
+            <Col xs={12} md={8} className=" bg-dark rounded-3 text-center">
               <h1 className=" text-center fw-bolder text-warning">
                 CREA NUOVA ASTA
               </h1>
@@ -56,7 +58,7 @@ const ImpostazioniAsta = () => {
               <Col xs={12} className=" my-4 text-warning">
                 <h2>Quanti Fanta Allenatori?</h2>
                 <Form.Select
-                  className=" select trasparente shadow-none border-0 text-warning text-center"
+                  className=" w-50 select trasparente shadow-none border-0 text-warning text-center mx-auto"
                   onChange={(e) => {
                     setNAllenatori(e.target.value);
                   }}
@@ -72,7 +74,7 @@ const ImpostazioniAsta = () => {
               <Col xs={12} className="text-warning my-4">
                 <h2>Quanti Fanta Milioni?</h2>
                 <Form.Select
-                  className=" select trasparente shadow-none border-0 text-warning text-center "
+                  className=" w-50 select trasparente shadow-none border-0 text-warning text-center mx-auto "
                   onChange={(e) => {
                     setNCrediti(e.target.value);
                   }}
@@ -88,7 +90,7 @@ const ImpostazioniAsta = () => {
                 <Form.Control
                   id="colorPlaceholder"
                   placeholder="Nome Asta"
-                  className="trasparente  shadow-none border-0 text-warning text-center"
+                  className="trasparente w-50  shadow-none border-0 text-warning text-center mx-auto"
                   type="text"
                   onChange={(e) => {
                     setNome(e.target.value);
@@ -97,8 +99,8 @@ const ImpostazioniAsta = () => {
               </Col>
 
               <Button
-                variant="outline-warning"
-                className=" border-3 mt-5 w-100"
+                variant="warning"
+                className=" border-3 mt-5 w-50 rounded-pill text-light fs-4 fw-bolder"
                 onClick={() => {
                   dispatch(
                     creaAstaAction(nome, nAllenatori, nCrediti, navigate)
@@ -117,10 +119,14 @@ const ImpostazioniAsta = () => {
               <h2 className=" text-warning text-center">
                 Effettua login per creare una nuova asta
               </h2>
+              <div className=" d-flex justify-content-center">
+                <SignInButton />
+                <RegisterButton />
+              </div>
             </Col>
           )}
           <Col xs={12} md={4} className=" bg-warning rounded-3">
-            <h1 className=" text-center fw-bolder text-black">LE TUE ASTE</h1>
+            <h1 className=" text-center fw-bolder text-dark">LE TUE ASTE</h1>
             <hr />
             {listaAste ? (
               <AnimatedList

@@ -19,5 +19,6 @@
   color: darkgoldenrod;
 }
 .select option {
-  background-color: rgb(30, 31, 32);
+  background-color: #212529;
+  border: #212529 !important;
 }

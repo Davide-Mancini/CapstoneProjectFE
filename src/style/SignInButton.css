@@ -1,0 +1,7 @@
+.campo-email:focus {
+  color: black !important;
+  background-color: white !important;
+  border-color: #ffca2c !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 202, 44, 0.25) !important;
+}

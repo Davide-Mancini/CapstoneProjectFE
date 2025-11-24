@@ -1,6 +1,6 @@
 import Carousel from "react-bootstrap/Carousel";
 import { useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import "../style/carousel.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getNewsAction } from "../redux/actions/getNewsActions";
@@ -25,8 +25,11 @@ function Mycarousel() {
             id="sofa-standings-embed-33-76457"
             src="https://widgets.sofascore.com/it/embed/tournament/33/season/76457/standings/Serie%20A%2025%2F26?widgetTitle=Serie%20A%2025%2F26&showCompetitionLogo=true"
             style={{ height: "1123px", maxWidth: "768px", width: "100%" }}
-            className=" overflow-x-auto p-4 "
+            className=" position-relative overflow-x-auto p-4 "
           ></iframe>
+          <div className=" position-absolute z-3">
+            <Button>Classifica Completa</Button>
+          </div>
         </Col>
         <Col xs={12} md={9}>
           <Carousel fade className=" w-100 mx-auto p-4">

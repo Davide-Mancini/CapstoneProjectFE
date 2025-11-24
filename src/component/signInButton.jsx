@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { signIn } from "../redux/actions/signInAction";
 import { useDispatch, useSelector } from "react-redux";
+import "../style/SignInButton.css";
 const SignInButton = () => {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -41,7 +42,10 @@ const SignInButton = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group
+              className="campo-email mb-3 shadow-none"
+              controlId="exampleForm.ControlInput1"
+            >
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"

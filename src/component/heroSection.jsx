@@ -2,6 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import "./PillNav/PillNav";
 import "./TextType/TextType";
 import TextType from "./TextType/TextType";
+import "../style/Hero.css";
 const HeroSection = () => {
   return (
     <>
@@ -38,7 +39,7 @@ const HeroSection = () => {
               pauseDuration={3000}
               showCursor={true}
               cursorCharacter="|"
-              className=" text-warning h1"
+              className=" testo-hero text-warning h1"
             />
 
             <p className=" lead text-light">
