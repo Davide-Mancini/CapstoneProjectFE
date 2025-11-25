@@ -669,7 +669,8 @@ const Strategia = () => {
                         <small>Tipo</small>
                       </Col>
                       <Form.Select
-                        className=" trasparente text-warning text-center"
+                        name="tipo"
+                        className=" trasparente text-warning text-center px-0"
                         value={
                           getPlayerDetail(calciatore?.id, "tipo") || tipi[0]
                         }
@@ -682,8 +683,8 @@ const Strategia = () => {
                         }
                         disabled={selezionato}
                       >
-                        {tipi.map((tipo, index) => (
-                          <option key={index} value={tipo}>
+                        {tipi.map((tipo) => (
+                          <option key={tipo} value={tipo}>
                             {tipo}
                           </option>
                         ))}
@@ -715,10 +716,10 @@ const Strategia = () => {
             {error && <p className="text-danger text-center">{error}</p>}
             {strategiaCaricata && !isLoading && (
               <>
-                <p>{strategiaCaricata.nome}</p>
+                <p className=" text-center">{`(${strategiaCaricata.nome})`}</p>
                 <p>
-                  Appunti Strategia:{" "}
-                  {strategiaCaricata.appuntiGenerali ||
+                  Appunti Strategia: <br />
+                  {strategiaCaricata.appunti ||
                     "Nessun appunto presente per questa strategia"}
                 </p>
                 {strategiaCaricata.dettagli.map((dettaglio) => (

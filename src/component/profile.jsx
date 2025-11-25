@@ -50,35 +50,41 @@ export const Profile = () => {
           />
         </div>
         <Row className=" mt-4">
-          <Col md={2}>
-            <h3>Sidebar</h3>
+          <Col md={3} className=" bg-warning rounded-3">
+            <h2 className="text-center fw-bold">PROFILO</h2>
+            <p className=" m-0">Immagine Profilo:</p>
+            <Form.Group controlId="formFile" className="mb-3 ">
+              <Form.Control type="file" onChange={handleUpload} />
+            </Form.Group>
+            <p className=" m-0">Nome:</p>
+            <Form.Control value={user?.nome}></Form.Control>
+            <p className=" m-0">Cognome:</p>
+            <Form.Control value={user?.cognome}></Form.Control>
+            <p className=" m-0">Email:</p>
+            <Form.Control value={user?.email}></Form.Control>
           </Col>
-          <Col md={6}>
-            <Card style={{ width: "30rem" }}>
-              <Card.Img variant="top" src={imageSrc} />
-
-              <Form.Group controlId="formFile" className="mb-3 ">
-                <Form.Control type="file" onChange={handleUpload} />
-              </Form.Group>
-
-              <Card.Body>
-                <Card.Title className=" text-center mb-0">
-                  {user?.nome} {user?.cognome}
-                </Card.Title>
-                <Card.Text className=" text-center mt-0">
-                  ({user?.username})
-                </Card.Text>
-
-                <div className=" d-flex justify-content-around ">
-                  <Button variant="warning">Modifica Profilo</Button>
-                  <Button variant="danger">Elimina Profilo</Button>
-                </div>
-              </Card.Body>
-            </Card>
+          <Col md={6} className=" text-center text-light">
+            <div className=" h-100 mx-auto sfondo">
+              <img
+                src="src/assets/7169.png"
+                alt=""
+                className="card-template-image"
+              />
+              <div className="user-photo-wrapper">
+                {/* <img src={imageSrc} alt="Foto Profilo" className="user-photo" /> */}
+              </div>
+              <h3 className="user-name-overlay">
+                {user?.nome || "Utente Ospite"}
+              </h3>
+              <h1 className="surname">{user?.cognome}</h1>
+              <p className="user-role-overlay">
+                {user?.username || "Fanta Manager"}
+              </p>
+            </div>
           </Col>
           {/* INSERISCO LA LISTA DELLE ASTE DELL'UTENTE LOGGATO */}
-          <Col md={4} className=" bg-warning rounded-3">
-            <h2 className=" text-center">LE TUE ASTE</h2>
+          <Col md={3} className=" bg-warning rounded-3">
+            <h2 className=" text-center fw-bold">LE TUE ASTE</h2>
             {/* <ul className="overflow-y-scroll h-25 text-center">
               {listaAste?.map((asta, index) => (
                 <a
