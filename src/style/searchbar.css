@@ -1,5 +1,5 @@
 .margine {
-  margin-top: 5rem;
+  margin-top: 1rem;
 }
 /* From Uiverse.io by PriyanshuGupta28 */
 .pushable {
@@ -104,4 +104,9 @@
   100% {
     opacity: 1;
   }
+}
+.form-cerca-giocatori:focus {
+  background-color: white !important;
+
+  box-shadow: none !important;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Col, Form, InputGroup, Row } from "react-bootstrap";
 import { ArrowBarDown, ArrowBarUp, Coin } from "react-bootstrap-icons";
 import "../style/playerColumn.css";
@@ -8,7 +8,9 @@ const PlayerColumn = ({
   utenteId,
   ultimoAcquisto,
   dettagliAsta,
+  onDataChange,
 }) => {
+  //STATI PER FAR FUNZIONARE LE FRECCE DI RIDUZIONE
   const [countP, setCountP] = useState(3);
   const [countD, setCountD] = useState(8);
   const [countC, setCountC] = useState(8);
@@ -21,7 +23,38 @@ const PlayerColumn = ({
     C: Array(8).fill(null),
     A: Array(6).fill(null),
   });
+  const getAcquistiUtente = useCallback(() => {
+    const listaGiocatori = [];
 
+    const budget = dettagliAsta?.crediti || 1;
+
+    for (const ruolo in caselle) {
+      if (Object.prototype.hasOwnProperty.call(caselle, ruolo)) {
+        caselle[ruolo].forEach((casella) => {
+          if (casella && casella.nome) {
+            const prezzo = casella.prezzo || 0;
+            const percentualeBudget = ((prezzo / budget) * 100).toFixed(2);
+
+            listaGiocatori.push({
+              UtenteId: utenteId,
+              Utente: nomeUtente,
+              Ruolo: ruolo,
+              "Nome Giocatore": casella.nome,
+              "Prezzo Acquisto (FM)": prezzo,
+              "Percentuale Budget Spesa": percentualeBudget + "%",
+              "Budget Totale": budget,
+            });
+          }
+        });
+      }
+    }
+    return listaGiocatori;
+  }, [caselle, dettagliAsta?.crediti, nomeUtente, utenteId]);
+  useEffect(() => {
+    if (onDataChange && utenteId) {
+      onDataChange(utenteId, getAcquistiUtente());
+    }
+  }, [caselle, utenteId, onDataChange, getAcquistiUtente]);
   useEffect(() => {
     const caricaDatiIniziali = async () => {
       try {
@@ -31,16 +64,12 @@ const PlayerColumn = ({
         const data = await response.json();
 
         setCrediti(data.creditiResidui);
-
-        // Ricostruisci le caselle FE basandoti sui dati del DB
         const nuoveCaselle = {
           P: Array(3).fill(null),
           D: Array(8).fill(null),
           C: Array(8).fill(null),
           A: Array(6).fill(null),
         };
-
-        // Riempi le caselle con i giocatori già acquistati
         data.caselle.forEach((casella) => {
           if (casella.nomeCalciatore) {
             const ruolo = casella.ruolo;
@@ -77,8 +106,6 @@ const PlayerColumn = ({
       setCrediti(
         ultimoAcquisto.creditiResiduiVincitore - ultimoAcquisto.prezzo
       );
-
-      // Aggiungi il giocatore alla prima casella libera
       setCaselle((prev) => {
         const nuovoRuoloArray = [...prev[ruolo]];
         const index = nuovoRuoloArray.findIndex((c) => c === null);

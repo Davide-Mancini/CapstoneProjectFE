@@ -17,6 +17,7 @@ import {
   CloudArrowUpFill,
   Coin,
   Crosshair,
+  EyeFill,
   GraphUpArrow,
   Heart,
   Journals,
@@ -28,12 +29,13 @@ import { useEffect, useState } from "react";
 import { getAllCalciatoriAction } from "../redux/actions/getAllCalciatori";
 import "../style/Strategia.css";
 import { Link } from "react-router-dom";
-
+//FUNZIONE PER ESPORTARE STRATEGIE IN FILE CSV
 const downloadCsv = (data, filename = "giocatori_preferiti.csv") => {
   if (data.length === 0) {
     alert("Nessun dato da esportare.");
     return;
   }
+  //DEFINISCO LE INTESTAZIONE DELLE COLONNE
   const headers = [
     "ID",
     "Ruolo",
@@ -57,7 +59,7 @@ const downloadCsv = (data, filename = "giocatori_preferiti.csv") => {
       percentualeBudget,
     ]
       .map((value) => {
-        // Formattazione per CSV: assicura che le virgolette siano gestite correttamente e che i valori siano stringhe
+        //GESTIONE DELLE , " \N
         let stringValue = String(value);
         if (
           stringValue.includes(",") ||
@@ -82,11 +84,11 @@ const downloadCsv = (data, filename = "giocatori_preferiti.csv") => {
   link.click();
   document.body.removeChild(link);
 };
-
 const Strategia = () => {
   const dispatch = useDispatch();
   const handleExportCsv = () => {
-    const timestamp = new Date().toISOString().slice(0, 10); // Esempio: 2025-11-24
+    //MOSTRA LA DATA
+    const timestamp = new Date().toISOString().slice(0, 10);
     downloadCsv(giocatoriMiPiace, `strategia_giocatori_${timestamp}.csv`);
   };
   //DEFINISCO IL FILTRO DA PASSARE AL MOMENTO DEL DISPATCH DEL'ACTION
@@ -160,14 +162,6 @@ const Strategia = () => {
         direzione === "next" ? prev.pageNumber + 1 : prev.pageNumber - 1,
     }));
   };
-  // const [prezziTemporanei, setPrezziTemporanei] = useState({});
-  // const handlePrezzoChange = (id, value) => {
-  //   const prezzo = value === "" ? "" : parseInt(value, 10);
-  //   setPrezziTemporanei((prev) => ({
-  //     ...prev,
-  //     [id]: prezzo,
-  //   }));
-  // };
   const [percentuali, setPercentuali] = useState({});
   const handlePercentuale = (id, valore) => {
     const percentuale = valore === "" ? "" : parseFloat(valore);
@@ -191,7 +185,6 @@ const Strategia = () => {
       const ruolo = calciatoreDaGestire?.ruolo?.toUpperCase();
 
       if (ruolo === "P") {
-        // Controlla il limite solo per i Portieri
         const portieriSelezionati = giocatoriMiPiace.filter(
           (g) => g.ruolo?.toUpperCase() === "P"
         ).length;
@@ -235,7 +228,7 @@ const Strategia = () => {
       }
       const tempDetails = playerDetailsTemporanei[calciatoreId] || {};
       const prezzoAsta = tempDetails.prezzoAsta || 0;
-      const tipo = tempDetails.tipo || "SCOMMESSA";
+      const tipo = tempDetails.tipo || "-";
       const appuntiGiocatore = tempDetails.appuntiGiocatore || "";
       setGiocatoriMiPiace((prevGiocatoreMiPiace) => [
         ...prevGiocatoreMiPiace,
@@ -251,7 +244,7 @@ const Strategia = () => {
 
   const [listaStrategie, setListaStrategie] = useState([]);
   const [loadingStrategie, setLoadingStrategie] = useState(true);
-
+  // METODO PER RECUPERO DELLE STRATEGU
   const fetchAllStrategie = async () => {
     setLoadingStrategie(true);
 
@@ -281,7 +274,7 @@ const Strategia = () => {
     // Chiama la funzione al caricamento del componente
     fetchAllStrategie();
   }, []);
-  const tipi = ["SCOMMESSA", "TITOLARE", "BOMBER", "JOLLY"];
+  const tipi = ["-", "SCOMMESSA", "TITOLARE", "BOMBER", "JOLLY"];
   const user = useSelector((state) => {
     return state.signIn.user;
   });
@@ -312,7 +305,7 @@ const Strategia = () => {
     fetch("http://localhost:3001/strategie", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", // "Authorization": `Bearer ${tuoToken}`
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(strategiaPayload),
     })
@@ -370,7 +363,6 @@ const Strategia = () => {
       setError("Impossibile caricare la strategia.");
       setStrategiaCaricata(null);
     } finally {
-      // 5. Fine Caricamento
       setIsLoading(false);
     }
   };
@@ -473,6 +465,7 @@ const Strategia = () => {
                     value={nomeStrategia}
                     onChange={handleStrategyChange}
                     placeholder="Es. Titolari Low Cost"
+                    className="form-strategia"
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -605,7 +598,7 @@ const Strategia = () => {
                       </Col>
                       <Form.Control
                         type="number"
-                        className=" trasparente text-warning text-center"
+                        className="form-strategia trasparente text-warning text-center"
                         value={
                           getPlayerDetail(calciatore?.id, "prezzoAsta") || ""
                         }
@@ -626,7 +619,7 @@ const Strategia = () => {
                       </Col>
                       <Form.Control
                         type="number"
-                        className=" trasparente text-warning"
+                        className="form-strategia trasparente text-warning text-center"
                         onChange={(e) => {
                           handlePercentuale(calciatore?.id, e.target.value);
                         }}
@@ -648,7 +641,7 @@ const Strategia = () => {
                         <small>Appunti</small>
                       </Col>
                       <Form.Control
-                        className=" trasparente text-warning text-center"
+                        className="form-strategia trasparente text-warning text-center"
                         value={getPlayerDetail(
                           calciatore?.id,
                           "appuntiGiocatore"
@@ -665,7 +658,7 @@ const Strategia = () => {
                     </Col>
                     <Col className=" d-flex justify-content-center flex-column align-items-center me-1">
                       <Col className=" d-flex align-items-center  ">
-                        <Journals className=" me-1 text-warning" />
+                        <EyeFill className=" me-1 text-warning" />
                         <small>Tipo</small>
                       </Col>
                       <Form.Select
@@ -684,7 +677,7 @@ const Strategia = () => {
                         disabled={selezionato}
                       >
                         {tipi.map((tipo) => (
-                          <option key={tipo} value={tipo}>
+                          <option className=" bg-dark" key={tipo} value={tipo}>
                             {tipo}
                           </option>
                         ))}
@@ -696,7 +689,7 @@ const Strategia = () => {
                         <small>Quotazione</small>
                       </Col>
                       <Form.Control
-                        className=" trasparente text-warning text-center"
+                        className="form-strategia trasparente text-warning text-center"
                         readOnly
                         value={calciatore?.valore}
                       ></Form.Control>

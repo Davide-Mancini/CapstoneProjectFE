@@ -1,8 +1,7 @@
-import { Check, CheckLg, Fire } from "react-bootstrap-icons";
+import { Check, CheckLg, Fire, PencilFill } from "react-bootstrap-icons";
 import HeroSection from "./heroSection";
 import Mycarousel from "./myCarousel";
 import MyFooter from "./myFooter";
-import MyNavbar from "./myNavbar";
 import PillNav from "./PillNav/PillNav";
 import Steps from "./steps";
 import "../assets/fire.svg";
@@ -11,21 +10,50 @@ import SignInButton from "./signInButton";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { Logout } from "../redux/actions/logoutAction";
-import { Alert, DropdownButton, NavDropdown } from "react-bootstrap";
+import {
+  Alert,
+  Button,
+  DropdownButton,
+  Form,
+  Modal,
+  NavDropdown,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../style/homePage.css";
+import { uploadImg } from "../redux/actions/uploadImgActions";
+import { modificheUserAction } from "../redux/actions/modificheUserAction";
 const HomePage = () => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  //RECUPERO USER
   const user = useSelector((state) => {
     return state.signIn.user;
   });
-
+  //SERVONO PER INVIARE LE MODIFCHE DEL PROFILO
+  const [nome, setNome] = useState("");
+  const [cognome, setCognome] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  //SE USER è PRESENTE SETTO GLI STATI LOCALI CON I DATI REALI
+  useEffect(() => {
+    if (user) {
+      setNome(user.nome || "");
+      setCognome(user.cognome || "");
+      setEmail(user.email || "");
+      setUsername(user.username || "");
+    }
+  }, [user]);
+  //FUNZIONE CHE DISPATCHA L'ACTION DI MODIFICA
+  const handleModifiche = () => {
+    dispatch(modificheUserAction(user.id, nome, cognome, username, email));
+    handleClose;
+  };
   const signInState = useSelector((state) => {
     return state.signIn.isAuthenticated;
   });
-  console.log("stato signin", signInState);
   useEffect(() => {
     if (signInState) {
       setVisible(true);
@@ -37,10 +65,19 @@ const HomePage = () => {
       setVisible(false);
     }
   }, [signInState]);
+  //PER AGGIORNARE IMMAGINE
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      dispatch(uploadImg(file));
+    }
+  };
+  const urlUploaded = useSelector((state) => state.uploader.url);
+  const imageSrc = urlUploaded || user?.avatar;
   return (
     <>
-      {/* <MyNavbar /> */}
       <div className=" d-flex justify-content-center">
+        {/* NAVBAR DI REACT BITS */}
         <PillNav
           logo={"src/assets/fire.svg"}
           logoAlt="Company Logo"
@@ -59,6 +96,7 @@ const HomePage = () => {
           pillTextColor="#fcf9f9ff"
         />
       </div>
+      {/* SE UTENTE NON è LOGGATO MOSTRO I BOTTONI DI ACCESSO E REGISTRAZIONE ALTRIMENTI BOTTONE CON NOME */}
       {!signInState ? (
         <div className="d-flex flex-row-reverse">
           <RegisterButton />
@@ -76,19 +114,19 @@ const HomePage = () => {
               <CheckLg className=" ms-1 fs-5 text-success" />
             </Alert>
           )}
-          <div className="d-flex flex-row-reverse me-5 ">
+          <div className="d-flex flex-row-reverse me-5  ">
             <DropdownButton
               variant="warning"
-              className="text-center me-1 mt-3  "
+              className="text-center me-1 mt-3   "
               title={
-                <h6>
+                <h6 className=" text-light m-0">
                   Ciao, <span className=" fw-bold"> {user?.nome || "..."}</span>
                 </h6>
               }
               drop="start"
               // showCaret={false}
             >
-              <Link className=" dropdown-item" to={"/profile"}>
+              <Link className=" dropdown-item" onClick={handleShow}>
                 Profilo
               </Link>
 
@@ -110,7 +148,66 @@ const HomePage = () => {
           </div>
         </>
       )}
-
+      {show && (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Profilo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {" "}
+            <div className=" w-100 text-center ">
+              <img src={imageSrc} alt="" className=" w-50 rounded-4" />
+              <Form.Group controlId="formFile" className="mb-3 ">
+                <Form.Control
+                  type="file"
+                  onChange={handleUpload}
+                  className="file-upload w-50 mx-auto"
+                />
+              </Form.Group>
+            </div>
+            <p className=" m-0 ">Nome</p>
+            <Form.Control
+              value={nome}
+              onChange={(e) => {
+                setNome(e.target.value);
+              }}
+            ></Form.Control>
+            <p className=" m-0">Cognome</p>
+            <Form.Control
+              value={cognome}
+              onChange={(e) => {
+                setCognome(e.target.value);
+              }}
+            ></Form.Control>
+            <p className=" m-0">Username</p>
+            <Form.Control
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            ></Form.Control>
+            <p className=" m-0">Email</p>
+            <Form.Control
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            ></Form.Control>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Chiudi
+            </Button>
+            <Button
+              variant="warning"
+              className=" text-light"
+              onClick={handleModifiche}
+            >
+              Salva Modifiche
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
       <HeroSection />
       <Steps />
       <Mycarousel />

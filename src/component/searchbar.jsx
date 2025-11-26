@@ -30,9 +30,6 @@ import ElectricBorder from "./ElectricBorder/ElectricBorder/ElectricBorder";
 
 const Searchbar = ({
   offertaAttuale,
-  // offerta1,
-  // offerta5,
-  // offerta10,
   sendOfferta,
   calciatoreSelezionato,
   handleSelezionaCalciatore,
@@ -42,6 +39,8 @@ const Searchbar = ({
   handleFineAsta,
   azzeraOfferta,
   dettagliAstaRecuperata,
+  handleExportCsv,
+  tutteLeRose,
 }) => {
   const dispatch = useDispatch();
   //DEFINISCO IL FILTRO DA PASSARE AL MOMENTO DEL DISPATCH DEL'ACTION
@@ -134,10 +133,7 @@ const Searchbar = ({
     astaCalciatore?.durataSecondi,
     handleFineAsta,
   ]);
-  console.log("timeeeeeeeer", timer);
-  console.log("ASTA CALCIATOREEEE", astaCalciatore);
-  console.log("Calciatoreee", calciatoreSelezionato);
-  console.log("offerta attuale", offertaAttuale);
+
   const [show, setShow] = useState(false);
   const inviaRapido = (incremento) => {
     const base = parseInt(offertaAttuale) || 0;
@@ -148,6 +144,7 @@ const Searchbar = ({
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [copia, setCopia] = useState(false);
+  //FUNZIONE PER COPIARE L'URL DA INVIARE AD AMICI, MODIFICA LO STATO COPIA PER POTER CAMBIARE LA SCRITTA E DOPO 3 SEC TORNA NORMALE
   const handleCopia = () => {
     const testoDaCopiare = `http://localhost:5173/sessioniAsta/${dettagliAstaRecuperata?.id}`;
     navigator.clipboard.writeText(testoDaCopiare);
@@ -157,9 +154,9 @@ const Searchbar = ({
     }, 3000);
   };
   const [show2, setShow2] = useState(false);
-
   const handleClose2 = () => setShow2(false);
   const handleShow2 = () => setShow2(true);
+  const hasAcquisti = Object.values(tutteLeRose).flat().length > 0;
   return (
     <>
       <div className=" d-flex">
@@ -193,7 +190,13 @@ const Searchbar = ({
         </h3>
       </div>
       <div className=" d-flex flex-row-reverse me-5 mb-2">
-        <Button variant="outline-light" className=" mx-1">
+        <Button
+          variant="outline-light"
+          className=" mx-1"
+          onClick={handleExportCsv}
+          //SE ANCORA NON CI SONO ACQUISTI IL BOTTONE è DISBAILITATO, APPENA VIENE PRESO UN CALCIATORE SI ATTIVA
+          disabled={!hasAcquisti}
+        >
           <CloudArrowUpFill className=" me-1 fs-5" />
           ESPORTA ASTA
         </Button>
@@ -249,7 +252,7 @@ const Searchbar = ({
                 <Form.Control
                   type="search"
                   placeholder="Cerca giocatore"
-                  className="me-2"
+                  className="form-cerca-giocatori me-2"
                   aria-label="Search"
                   name="cognome"
                   value={filters.cognome}
@@ -316,22 +319,12 @@ const Searchbar = ({
                       handleIniziaAsta();
                       setTimer(10);
                       setIsRunning(true);
-                      // dispatch(
-                      //   astaCalciatoreAction(
-                      //     calciatoreSelezionato.id,
-                      //     dettagliAstaRecuperata.id
-                      //   )
-                      // );
                     }}
                   >
                     {" "}
                     INIZIA ASTA
                   </Button>
                 )}
-
-                {/* <Button onClick={sendOfferta} className=" my-3">
-                  INVIA OFFERTA
-                </Button> */}
               </Row>
             )}
             {Object.keys(calciatoreSelezionato).length !== 0 && (
@@ -366,24 +359,6 @@ const Searchbar = ({
                   <span className="edge"></span>
                   <span className="front"> +10 </span>
                 </button>
-                {/* <Button
-                className=" border-0 w-25 fs-5 bg-info"
-                onClick={offerta1}
-              >
-                +1
-              </Button>
-              <Button
-                className=" border-0 w-25 fs-5 bg-success"
-                onClick={offerta5}
-              >
-                +5
-              </Button>
-              <Button
-                className=" border-0 w-25 fs-5 bg-warning"
-                onClick={offerta10}
-              >
-                +10
-              </Button> */}
               </Row>
             )}
           </Col>

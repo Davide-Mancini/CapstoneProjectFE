@@ -1,19 +1,70 @@
 import { Container } from "react-bootstrap";
 import Griglia from "./griglia";
-import ImpostazioniAsta from "./impostazioniAsta";
-import MyNavbar from "./myNavbar";
 import Searchbar from "./searchbar";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import SockJS from "sockjs-client";
 import Stomp, { over } from "stompjs";
 import { getAstaCalciatoreById } from "../redux/actions/getAstaCalciatoreByid";
 import { astaTerminataAction } from "../redux/actions/astaTerminataAction";
 import { addUserToAstaAction } from "../redux/actions/addUserToAstaAction";
-import PillNav from "./PillNav/PillNav";
 
+//METODO PER DOWNLOAS ED ESPORTAZIONE ROSE ASTA
+const downloadCsv = (data, filename = "acquisti.csv") => {
+  if (data.length === 0) {
+    alert("Nessun giocatore acquistato da esportare.");
+    return;
+  }
+  //STABILISCO LE INTESTAZIONI DELLE COLONNE DEL FILE CSV
+  const headers = [
+    "Utente",
+    "Ruolo",
+    "Nome Giocatore",
+    "Prezzo Acquisto (FM)",
+    "Percentuale Budget Spesa",
+  ];
+
+  const csvData = data.map((acquisto) => {
+    return (
+      [
+        acquisto["Utente"],
+        acquisto["Ruolo"],
+        acquisto["Nome Giocatore"],
+        acquisto["Prezzo Acquisto (FM)"],
+        acquisto["Percentuale Budget Spesa"],
+      ]
+        .map((value) => {
+          let stringValue = String(value);
+          //PER EVITARE CONFLITTI DATI DALLE VIRGOLE SE NELLA STRINGA è PRESENTE , " \n LE SOSTITUISCO CON DOPPIE VIRGOLETTE
+          if (
+            stringValue.includes(",") ||
+            stringValue.includes('"') ||
+            stringValue.includes("\n")
+          ) {
+            stringValue = `"${stringValue.replace(/"/g, '""')}"`;
+          }
+          return stringValue;
+        })
+        //AGGIUNGO VIRGOLA PER FILE CSV
+        .join(",")
+    );
+  });
+
+  const csvString = [headers.join(","), ...csvData].join("\n");
+  //CREO FILE TEMPORANEO
+  const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", filename);
+  link.style.visibility = "hidden";
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 const Asta = () => {
   // dichiaro dispatch per poter usare lo useDispatch
   const dispatch = useDispatch();
@@ -28,8 +79,6 @@ const Asta = () => {
   }, [id, dispatch]);
   //Recupero i dettagli dell'asta dallo store di redux
   const dettagliAstaRecuperata = useSelector((state) => state.astaById.asta);
-  console.log("Dettagli Asta:", dettagliAstaRecuperata);
-  console.log("Utenti nella sessione:", dettagliAstaRecuperata?.utenti);
   useEffect(() => {
     console.log("dettagliAstaRecuperata cambiato:", dettagliAstaRecuperata);
   }, [dettagliAstaRecuperata]);
@@ -42,7 +91,6 @@ const Asta = () => {
   // }, [astaCalciatoreRecuperata]);
   //Setto stato locale per offerta e username
   const [offerta, setOfferta] = useState(0);
-  console.log("Offertaaaa", offerta);
   const [username, setUsername] = useState("");
   //Recupero l'utente dallo stato di redux
   const user = useSelector((state) => {
@@ -57,7 +105,6 @@ const Asta = () => {
   const [offertaAttuale, setOffertaAttuale] = useState(0);
   const [astaCalciatore, setAstaCalciatore] = useState(null);
   const [offerente, setOfferente] = useState(null);
-  console.log("ASTAAAAA", astaCalciatore);
   //Qui inizia la sottoscrizione del client al WebSocket
   useEffect(() => {
     //Se dettagliAstaRecuperata?.id o user?.id non sono presenti fermo subito l'esecuzione
@@ -127,7 +174,7 @@ const Asta = () => {
           username: user.username,
         };
 
-        console.log("🚀 Invio messaggio utente-entrato:", payload);
+        console.log("Invio messaggio utente-entrato:", payload);
         client.send(
           `/app/utente-entrato/${dettagliAstaRecuperata.id}`,
           {},
@@ -267,6 +314,33 @@ const Asta = () => {
     );
   };
 
+  //SALVO TUTTE LE ROSE QUI
+  const [tutteLeRose, setTutteLeRose] = useState({});
+  //FUNZIONE PER AGGIORNATE LE ROSE
+  //USECALLBACK MEMOIZZA UNA FUNZIONE IN MODO CHE NON VENGA RICREATA AD OGNI RENDER MOLTO UTILE PER OTTIMIZZARE
+  const handleRosaUpdate = useCallback((idUtente, datiRosa) => {
+    setTutteLeRose((prev) => ({
+      ...prev,
+      [idUtente]: datiRosa,
+    }));
+  }, []);
+
+  //FUNZIONE CHE PASSO COME PROPS CHE VERRA SCATENATA AL CLICK DEL BOTTONE SU SEARCHBAR
+  const handleExportCsv = () => {
+    //OBJECT VALUES RESTITUISCE SOLTANTO I VALORE SENZA LE CHIAVI, FLAT APPIATTISCE GLI ARRAY DI ARRAY IN UN SINGOLO ARRAY
+    const tuttiGliAcquisti = Object.values(tutteLeRose).flat();
+    //VERIFICO CHE NON SIA VUOTO
+    if (tuttiGliAcquisti.length > 0) {
+      const astaNome = dettagliAstaRecuperata?.nome_asta || "sessione";
+      const timestamp = new Date().toISOString().slice(0, 10);
+      //RICHIAMO LA FUNZIONE CREATA SOPRA PASSANDOGLI IL NOME DEL FILE
+      downloadCsv(tuttiGliAcquisti, `rosa_asta_${astaNome}_${timestamp}.csv`);
+    } else {
+      //SE CLICCO SUL PULSANTE MA IL FILE è VUOTO INVIA ALERT
+      alert("Nessun giocatore acquistato da esportare.");
+    }
+  };
+
   return (
     <>
       <Container fluid>
@@ -286,8 +360,10 @@ const Asta = () => {
           offerente={offerente}
           handleFineAsta={handleFineAsta}
           dettagliAstaRecuperata={dettagliAstaRecuperata}
+          handleExportCsv={handleExportCsv}
+          tutteLeRose={tutteLeRose}
         />
-        <Griglia />
+        <Griglia onRosaUpdate={handleRosaUpdate} />
       </Container>
     </>
   );

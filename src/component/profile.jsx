@@ -17,7 +17,7 @@ export const Profile = () => {
   const user = useSelector((state) => state.signIn.user);
   console.log(user);
 
-  const urlUploaded = useSelector((state) => state.uploader.url);
+  // const urlUploaded = useSelector((state) => state.uploader.url);
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -25,7 +25,7 @@ export const Profile = () => {
       dispatch(uploadImg(file));
     }
   };
-  const imageSrc = urlUploaded || user?.avatar;
+  // const imageSrc = urlUploaded || user?.avatar;
   const listaAste = user?.sessioni;
   return (
     <>

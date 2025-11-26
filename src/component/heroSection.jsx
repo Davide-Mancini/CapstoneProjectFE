@@ -6,22 +6,9 @@ import "../style/Hero.css";
 const HeroSection = () => {
   return (
     <>
-      <Container
-        /*class="container col-xxl-8 px-4 py-5" */ fluid
-        className=" px-4  col-xxl-8 w-100"
-      >
-        <Row
-          /*</Container>class="row flex-lg-row-reverse align-items-center g-5 py-5" */ className=" d-flex align-items-center g-5 py-5 flex-lg-row-reverse "
-        >
+      <Container fluid className=" px-4  col-xxl-8 w-100">
+        <Row className=" d-flex align-items-center g-5 py-5 flex-lg-row-reverse ">
           <Col className="col-10 col-sm-8 col-lg-6 mx-auto">
-            {/* <video
-              src="src\assets\macbook-subtle-turn (1).mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className=" w-100"
-            /> */}
             <img
               src="src/assets/macbook-air-m2-15-inch.png"
               alt=""
@@ -29,6 +16,7 @@ const HeroSection = () => {
             />
           </Col>
           <Col className="col-lg-6 my-auto">
+            {/* UTILIZZO COMPONENTE DI REACT BITS */}
             <TextType
               text={[
                 "Il nuovo tool per la gestione della tua asta!",

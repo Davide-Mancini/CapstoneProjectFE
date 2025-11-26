@@ -3,7 +3,7 @@ import { useInView } from "motion/react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 
-import "./AnimatedList.css";
+import "./AnimatedList2.css";
 const AnimatedItem = ({
   children,
   delay = 0,
@@ -29,7 +29,7 @@ const AnimatedItem = ({
   );
 };
 
-const AnimatedList = ({
+const AnimatedList2 = ({
   items,
   onItemSelect,
   showGradients = true,
@@ -132,7 +132,7 @@ const AnimatedList = ({
               } ${itemClassName}`}
             >
               <a
-                href={`http://localhost:5173/sessioniAsta/${item.id}`}
+                href={`http://localhost:5173/strategia`}
                 className="item-text text-decoration-none"
               >
                 {item.nome}
@@ -157,4 +157,4 @@ const AnimatedList = ({
   );
 };
 
-export default AnimatedList;
+export default AnimatedList2;

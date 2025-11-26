@@ -1,11 +1,10 @@
 import { Col, Container, Form, InputGroup, Row } from "react-bootstrap";
 import PlayerColumn from "./playerColumn";
-import { GetAstaByIdAction } from "../redux/actions/getAstaByIdActions";
 import { useSelector } from "react-redux";
 import "../style/griglia.css";
 import { useEffect } from "react";
 
-const Griglia = () => {
+const Griglia = ({ onRosaUpdate }) => {
   const dettagliAsta = useSelector((state) => state.addUserToAsta.asta);
   console.log("Griglia monntata ", dettagliAsta);
   // Definisco gli utenti (giocatori) recuperandoli dallo stato della chiamata
@@ -46,6 +45,7 @@ const Griglia = () => {
               ultimoAcquisto={ultimoAcquisto}
               utenteId={singoloUtente.id}
               dettagliAsta={dettagliAsta}
+              onDataChange={onRosaUpdate}
             />
           ))}
         </Row>

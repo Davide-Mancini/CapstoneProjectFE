@@ -10,11 +10,6 @@ const SignInButton = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
-  //FETCH PER RECUPERARE LE NOTIZIE
-  // useEffect(() => {
-  //   dispatch(signIn());
-  // }, []);
   const handleSignIn = () => {
     dispatch(signIn(email, password));
   };

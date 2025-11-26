@@ -1,7 +1,6 @@
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import MyNavbar from "./myNavbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { creaAstaAction } from "../redux/actions/creaAstaAction";
 import PillNav from "./PillNav/PillNav";
@@ -9,6 +8,7 @@ import "./AnimatedList/AnimatedList/AnimatedList";
 import AnimatedList from "./AnimatedList/AnimatedList/AnimatedList";
 import SignInButton from "./signInButton";
 import RegisterButton from "./registerButton";
+import AnimatedList2 from "./AnimatedList2/AnimatedList2";
 const ImpostazioniAsta = () => {
   const dispatch = useDispatch();
   const [nAllenatori, setNAllenatori] = useState(0);
@@ -18,17 +18,42 @@ const ImpostazioniAsta = () => {
   console.log(nCrediti);
   console.log(nome);
   const navigate = useNavigate();
+  const [listaStrategie, setListaStrategie] = useState([]);
+  const [loadingStrategie, setLoadingStrategie] = useState(true);
+  //METODO PER RECUPERARE TUTTE LE STRATEGIE DELLO SPECIFICO UTENTE E LE SALVO NELLO STATO LOCALE SOPRA
+  const fetchAllStrategie = async () => {
+    setLoadingStrategie(true);
+    try {
+      const response = await fetch("http://localhost:3001/strategie", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-  // useEffect(() => {
-  //   dispatch(creaAstaAction(nome, nAllenatori, nCrediti));
-  // },[]);
+      if (!response.ok) {
+        throw new Error("Errore nel recupero delle strategie.");
+      }
 
+      const data = await response.json();
+      setListaStrategie(data);
+    } catch (error) {
+      console.error("Errore:", error);
+    } finally {
+      setLoadingStrategie(false);
+    }
+  };
+  //AL PRIMO RENDER RECUPERO TUTTE LE STRATEGIE
+  useEffect(() => {
+    fetchAllStrategie();
+  }, []);
   const user = useSelector((state) => state.signIn.user);
   const listaAste = user?.sessioni;
 
   return (
     <>
-      <Container fluid className=" p-5 mx-auto">
+      <Container fluid className=" min-vh-100 p-5 mx-auto">
         <div className=" d-flex justify-content-center">
           <PillNav
             logo={"src/assets/fire.svg"}
@@ -48,17 +73,47 @@ const ImpostazioniAsta = () => {
             pillTextColor="#fcf9f9ff"
           />
         </div>
-        <Row className=" vh-100 mt-4">
+        <Row className="  mt-5">
+          <Col
+            xs={12}
+            md={2}
+            className=" bg-warning rounded-3 mt-3 text-center"
+          >
+            <h1 className=" text-center fw-bolder text-dark">
+              LE TUE STRATEGIE
+            </h1>
+            <Link
+              to={"/strategia"}
+              className="  btn btn-outline-dark rounded-pill border-2 fw-bold"
+            >
+              Nuova Strategia +
+            </Link>
+            <hr />
+            {loadingStrategie ? (
+              <p>Caricamento strategie salvate...</p>
+            ) : (
+              <AnimatedList2
+                items={listaStrategie}
+                onItemSelect={(item, index) => console.log(item, index)}
+                showGradients={true}
+                enableArrowNavigation={true}
+                displayScrollbar={true}
+              />
+            )}
+          </Col>
           {user ? (
             <Col xs={12} md={8} className=" bg-dark rounded-3 text-center">
-              <h1 className=" text-center fw-bolder text-warning">
+              <h1
+                className=" text-center fw-bolder text-warning"
+                style={{ fontSize: "70px" }}
+              >
                 CREA NUOVA ASTA
               </h1>
               <hr />
-              <Col xs={12} className=" my-4 text-warning">
+              <Col xs={12} className=" my-4 text-light">
                 <h2>Quanti Fanta Allenatori?</h2>
                 <Form.Select
-                  className=" w-50 select trasparente shadow-none border-0 text-warning text-center mx-auto"
+                  className=" w-25 select trasparente shadow-none border-0 text-warning px-0 text-center mx-auto"
                   onChange={(e) => {
                     setNAllenatori(e.target.value);
                   }}
@@ -71,10 +126,10 @@ const ImpostazioniAsta = () => {
                   <option value="12">12</option>
                 </Form.Select>
               </Col>
-              <Col xs={12} className="text-warning my-4">
+              <Col xs={12} className="text-light my-4">
                 <h2>Quanti Fanta Milioni?</h2>
                 <Form.Select
-                  className=" w-50 select trasparente shadow-none border-0 text-warning text-center mx-auto "
+                  className=" w-25 select trasparente shadow-none border-0 text-warning px-0 text-center mx-auto "
                   onChange={(e) => {
                     setNCrediti(e.target.value);
                   }}
@@ -85,12 +140,12 @@ const ImpostazioniAsta = () => {
                   <option value="1000">1000</option>
                 </Form.Select>
               </Col>
-              <Col xs={12} className="text-warning my-4">
+              <Col xs={12} className="text-light my-4">
                 <h2>Nome Asta</h2>
                 <Form.Control
                   id="colorPlaceholder"
                   placeholder="Nome Asta"
-                  className="trasparente w-50  shadow-none border-0 text-warning text-center mx-auto"
+                  className="trasparente w-25  shadow-none border-0 text-warning text-center mx-auto"
                   type="text"
                   onChange={(e) => {
                     setNome(e.target.value);
@@ -125,8 +180,9 @@ const ImpostazioniAsta = () => {
               </div>
             </Col>
           )}
-          <Col xs={12} md={4} className=" bg-warning rounded-3">
+          <Col xs={12} md={2} className=" bg-warning rounded-3 mt-3">
             <h1 className=" text-center fw-bolder text-dark">LE TUE ASTE</h1>
+            <p>Rivedi le tue aste o riprendile da dove le hai lasciate </p>
             <hr />
             {listaAste ? (
               <AnimatedList

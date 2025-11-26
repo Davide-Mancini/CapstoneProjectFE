@@ -33,6 +33,7 @@ function Mycarousel() {
         </Col>
         <Col xs={12} md={9}>
           <Carousel fade className=" w-100 mx-auto p-4">
+            {/* MAP DELLE NOTIZIE FORNITE DA GAZZETTA */}
             {news.map((singleNews, id) => (
               <Carousel.Item interval={7000} key={id}>
                 <img
