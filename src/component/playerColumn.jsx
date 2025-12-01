@@ -96,16 +96,14 @@ const PlayerColumn = ({
       caricaDatiIniziali();
     }
   }, [utenteId, dettagliAsta?.id]);
-
+  console.log("Ultimo acquisto ", ultimoAcquisto);
   useEffect(() => {
     if (!ultimoAcquisto) return;
 
     if (ultimoAcquisto.vincitore === nomeUtente) {
       const ruolo = ultimoAcquisto.ruolo;
 
-      setCrediti(
-        ultimoAcquisto.creditiResiduiVincitore - ultimoAcquisto.prezzo
-      );
+      setCrediti(ultimoAcquisto.creditiResiduiVincitore);
       setCaselle((prev) => {
         const nuovoRuoloArray = [...prev[ruolo]];
         const index = nuovoRuoloArray.findIndex((c) => c === null);

@@ -22,9 +22,10 @@ import { Link } from "react-router-dom";
 import "../style/homePage.css";
 import { uploadImg } from "../redux/actions/uploadImgActions";
 import { modificheUserAction } from "../redux/actions/modificheUserAction";
+import { resetLoginSuccess } from "../redux/actions/signInAction";
 const HomePage = () => {
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -59,17 +60,18 @@ const HomePage = () => {
   const signInState = useSelector((state) => {
     return state.signIn.isAuthenticated;
   });
+  const loginSuccesso = useSelector((state) => {
+    return state.signIn.loginSuccess;
+  });
   useEffect(() => {
-    if (signInState) {
-      setVisible(true);
+    if (loginSuccesso) {
+      // setVisible(true);
       const timer = setTimeout(() => {
-        return setVisible(false);
+        dispatch(resetLoginSuccess());
       }, 2000);
       return () => clearTimeout(timer);
-    } else {
-      setVisible(false);
     }
-  }, [signInState]);
+  }, [loginSuccesso, dispatch]);
   //PER AGGIORNARE IMMAGINE
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -96,7 +98,7 @@ const HomePage = () => {
           items={[
             { label: "ASTA", href: "/impostazioni-asta" },
             { label: "STRATEGIA", href: "/strategia" },
-            { label: "CAMPETTO", href: "/campetto" },
+            { label: "NOTIZIE", href: "/campetto" },
             { label: "PROFILO", href: "#", onClick: handleShow },
           ]}
           activeHref="/"
@@ -116,7 +118,7 @@ const HomePage = () => {
         </div>
       ) : (
         <>
-          {visible && (
+          {loginSuccesso && signInState && (
             <Alert
               variant="warning"
               className=" position-fixed start-50 text-center z-3 translate-middle fw-bold  mt-5 "

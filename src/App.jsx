@@ -15,6 +15,7 @@ import { Profile } from "./component/profile";
 import { ListaGiocatori } from "./component/listaGiocatori";
 import "./component/FuzzyText/FuzzyText/FuzzyText";
 import NotFoundPage from "./component/notFoundPage";
+import Campetto from "./component/Campetto";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function App() {
               path="/impostazioni-asta"
               element={<ImpostazioniAsta />}
             ></Route>
+            <Route path="/campetto" element={<Campetto />}></Route>
             <Route path="/sessioniAsta/:id" element={<Asta />} />
             <Route path="/strategia" element={<Strategia />} />
             <Route path="/profile" element={<Profile />} />

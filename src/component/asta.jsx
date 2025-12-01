@@ -11,7 +11,9 @@ import { getAstaCalciatoreById } from "../redux/actions/getAstaCalciatoreByid";
 import { astaTerminataAction } from "../redux/actions/astaTerminataAction";
 import { addUserToAstaAction } from "../redux/actions/addUserToAstaAction";
 import { ChatFill, Messenger, Send, X } from "react-bootstrap-icons";
-
+import SignInButton from "./signInButton";
+import RegisterButton from "./registerButton";
+import PillNav from "./PillNav/PillNav";
 //METODO PER DOWNLOAS ED ESPORTAZIONE ROSE ASTA
 const downloadCsv = (data, filename = "acquisti.csv") => {
   if (data.length === 0) {
@@ -153,7 +155,7 @@ const Asta = () => {
         console.log("Utente entrato:", utenteEntrato);
         dispatch(addUserToAstaAction(utenteEntrato));
       });
-      client.subscribe("/topic/messages", (message) => {
+      client.subscribe(`/topic/messages/${astaId}`, (message) => {
         const messaggioRicevuto = JSON.parse(message.body);
         console.log("messaggio ricevuto", messaggioRicevuto);
         setMessaggi((prevMessaggi) => [...prevMessaggi, messaggioRicevuto]);
@@ -361,94 +363,137 @@ const Asta = () => {
         content: messaggio,
         immagine: user?.avatar,
       };
-      stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
+      stompClient.send(
+        `/app/chat/${dettagliAstaRecuperata.id}`,
+        {},
+        JSON.stringify(chatMessage)
+      );
     }
     setMessaggio("");
   };
   return (
     <>
       <Container fluid>
-        {/* Passo le mie funzioni alla search bar tramite props */}
-        <Searchbar
-          offertaAttuale={offertaAttuale}
-          azzeraOfferta={azzeraOfferta}
-          offerta1={handleOfferta1}
-          offerta5={handleOfferta5}
-          offerta10={handleOfferta10}
-          sendOfferta={sendOfferta}
-          getAstaId={getAstaCalciatoreById}
-          calciatoreSelezionato={calciatoreSelezionato}
-          handleSelezionaCalciatore={handleSelezionaCalciatore}
-          handleIniziaAsta={handleIniziaAsta}
-          astaCalciatore={astaCalciatore}
-          offerente={offerente}
-          handleFineAsta={handleFineAsta}
-          dettagliAstaRecuperata={dettagliAstaRecuperata}
-          handleExportCsv={handleExportCsv}
-          tutteLeRose={tutteLeRose}
-        />
-        <Griglia onRosaUpdate={handleRosaUpdate} />
-        <div className=" d-flex flex-row-reverse sticky-bottom">
-          <Button
-            onClick={() => {
-              setMostraChat(true);
-            }}
-            className=" mb-3"
-          >
-            <ChatFill />
-          </Button>
-        </div>
-        {mostraChat && (
-          <div className=" d-flex flex-row-reverse sticky-bottom">
-            <div className=" bg-light rounded-3 mb-3">
-              <div style={{ height: "300px" }} className=" bg-light rounded-3 ">
-                <div className=" d-flex flex-row-reverse border rounded-3 border-light bg-dark ">
-                  <X
-                    className=" text-danger fs-5"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setMostraChat(false);
-                    }}
-                  />
-                  <h4 className=" mx-auto text-warning">Chat</h4>
-                </div>
-                <ul
-                  className=" d-flex flex-column ps-0 ms-1 mt-3 text-dark"
-                  style={{ width: "250px" }}
-                >
-                  {messaggi.map((mex, index) => (
-                    <li
-                      key={index}
-                      className=" d-flex w-100 my-1 border-bottom pb-1"
-                    >
-                      <img
-                        src={mex.immagine}
-                        alt=""
-                        className=" rounded-pill me-1 "
-                        style={{ width: "20px", height: "20px" }}
+        {user ? (
+          <>
+            <Searchbar
+              offertaAttuale={offertaAttuale}
+              azzeraOfferta={azzeraOfferta}
+              offerta1={handleOfferta1}
+              offerta5={handleOfferta5}
+              offerta10={handleOfferta10}
+              sendOfferta={sendOfferta}
+              getAstaId={getAstaCalciatoreById}
+              calciatoreSelezionato={calciatoreSelezionato}
+              handleSelezionaCalciatore={handleSelezionaCalciatore}
+              handleIniziaAsta={handleIniziaAsta}
+              astaCalciatore={astaCalciatore}
+              offerente={offerente}
+              handleFineAsta={handleFineAsta}
+              dettagliAstaRecuperata={dettagliAstaRecuperata}
+              handleExportCsv={handleExportCsv}
+              tutteLeRose={tutteLeRose}
+            />
+            <Griglia onRosaUpdate={handleRosaUpdate} />
+            <div className=" d-flex flex-row-reverse sticky-bottom">
+              <Button
+                onClick={() => {
+                  setMostraChat(true);
+                }}
+                className=" mb-3"
+              >
+                <ChatFill />
+              </Button>
+            </div>
+            {mostraChat && (
+              <div className=" d-flex flex-row-reverse sticky-bottom">
+                <div className=" bg-light rounded-3 mb-3">
+                  <div
+                    style={{ height: "300px" }}
+                    className=" bg-light rounded-3 "
+                  >
+                    <div className=" d-flex flex-row-reverse border rounded-3 border-light bg-dark ">
+                      <X
+                        className=" text-danger fs-5"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setMostraChat(false);
+                        }}
                       />
-                      <small className=" fw-bold me-1">{mex.nickname}:</small>
-                      <small className=" m-0 ">{mex.contenuto}</small>
-                    </li>
-                  ))}
-                </ul>
+                      <h4 className=" mx-auto text-warning">Chat</h4>
+                    </div>
+                    <ul
+                      className=" d-flex flex-column ps-0 ms-1 mt-3 text-dark"
+                      style={{ width: "250px" }}
+                    >
+                      {messaggi.map((mex, index) => (
+                        <li
+                          key={index}
+                          className=" d-flex w-100 my-1 border-bottom pb-1"
+                        >
+                          <img
+                            src={mex.immagine}
+                            alt=""
+                            className=" rounded-pill me-1 "
+                            style={{ width: "20px", height: "20px" }}
+                          />
+                          <small className=" fw-bold me-1">
+                            {mex.nickname}:
+                          </small>
+                          <small className=" m-0 ">{mex.contenuto}</small>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className=" d-flex align-items-center">
+                    <Form.Control
+                      value={messaggio}
+                      placeholder="Scrivi messaggio"
+                      className=" shadow-none ms-2 my-2"
+                      onChange={handleMessaggio}
+                    ></Form.Control>
+                    <Send
+                      className=" fs-4 mx-2 text-primary"
+                      style={{ cursor: "pointer" }}
+                      onClick={sendMessaggio}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className=" d-flex align-items-center">
-                <Form.Control
-                  value={messaggio}
-                  placeholder="Scrivi messaggio"
-                  className=" shadow-none ms-2 my-2"
-                  onChange={handleMessaggio}
-                ></Form.Control>
-                <Send
-                  className=" fs-4 mx-2 text-primary"
-                  style={{ cursor: "pointer" }}
-                  onClick={sendMessaggio}
-                />
+            )}
+          </>
+        ) : (
+          <>
+            <div className=" d-flex justify-content-center">
+              {/* NAVBAR DI REACT BITS */}
+              <PillNav
+                logo={"src/assets/fire.svg"}
+                logoAlt="Company Logo"
+                items={[
+                  { label: "ASTA", href: "/impostazioni-asta" },
+                  { label: "STRATEGIA", href: "/strategia" },
+                  { label: "CAMPETTO", href: "/campetto" },
+                  { label: "PROFILO", href: "#" },
+                ]}
+                activeHref="/"
+                className="custom-nav"
+                ease="power2.easeOut"
+                baseColor="#dda60eff"
+                pillColor="#212529"
+                hoveredPillTextColor="#ffffff"
+                pillTextColor="#fcf9f9ff"
+              />
+            </div>
+            <div className=" h-100 text-warning d-flex justify-content-center align-items-center flex-column">
+              <h3>Per entrare nell'asta devi effettuare l'accesso</h3>
+              <div>
+                <SignInButton />
+                <RegisterButton />
               </div>
             </div>
-          </div>
+          </>
         )}
+        {/* Passo le mie funzioni alla search bar tramite props */}
       </Container>
     </>
   );

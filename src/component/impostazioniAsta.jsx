@@ -9,6 +9,7 @@ import AnimatedList from "./AnimatedList/AnimatedList/AnimatedList";
 import SignInButton from "./signInButton";
 import RegisterButton from "./registerButton";
 import AnimatedList2 from "./AnimatedList2/AnimatedList2";
+import "../style/impostazioniAsta.css";
 const ImpostazioniAsta = () => {
   const dispatch = useDispatch();
   const [nAllenatori, setNAllenatori] = useState(0);
@@ -61,7 +62,7 @@ const ImpostazioniAsta = () => {
             items={[
               { label: "ASTA", href: "/impostazioni-asta" },
               { label: "STRATEGIA", href: "/strategia" },
-              { label: "CAMPETTO", href: "/campetto" },
+              { label: "NOTIZIE", href: "/campetto" },
               { label: "PROFILO", href: "#" },
             ]}
             activeHref="/"

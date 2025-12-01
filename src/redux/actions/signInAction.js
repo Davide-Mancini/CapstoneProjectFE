@@ -1,6 +1,10 @@
 import { checkAuth } from "./checkAuth";
 
 export const SIGN_IN = "SIGN_IN_SUCCESS";
+export const RESET_LOGIN_SUCCESS = "RESET_LOGIN_SUCCESS";
+export const resetLoginSuccess = () => ({
+  type: RESET_LOGIN_SUCCESS,
+});
 export const signIn = (email, password) => {
   return async (dispatch) => {
     await fetch("http://localhost:3001/auth/login", {

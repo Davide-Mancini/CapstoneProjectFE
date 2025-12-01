@@ -377,8 +377,8 @@ const Strategia = () => {
           items={[
             { label: "ASTA", href: "/impostazioni-asta" },
             { label: "STRATEGIA", href: "/strategia" },
-            { label: "CAMPETTO", href: "/campetto" },
-            { label: "PROFILO", href: "/profile" },
+            { label: "NOTIZIE", href: "/campetto" },
+            { label: "PROFILO", href: "/" },
           ]}
           activeHref="/"
           className="custom-nav"

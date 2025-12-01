@@ -1,0 +1,10 @@
+.campo {
+  background-image: url("../assets/1137.jpg");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 296px;
+  height: 70%;
+  scale: 1.5;
+  margin-top: 10em;
+}

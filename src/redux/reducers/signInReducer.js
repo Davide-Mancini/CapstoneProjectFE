@@ -1,9 +1,10 @@
 import { SIGN_OUT } from "../actions/logoutAction";
-import { SIGN_IN } from "../actions/signInAction";
+import { RESET_LOGIN_SUCCESS, SIGN_IN } from "../actions/signInAction";
 
 const initialState = {
   isAuthenticated: false,
   user: null,
+  loginSuccess: false,
 };
 const signInReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -12,11 +13,18 @@ const signInReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: true,
         user: action.payload,
+        loginSuccess: true,
       };
     case SIGN_OUT:
       return {
         isAuthenticated: false,
         user: {},
+        loginSuccess: false,
+      };
+    case RESET_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loginSuccess: false,
       };
     default:
       return state;
