@@ -10,7 +10,7 @@ const Steps = () => {
           <Col
             xs={12}
             md={4}
-            className=" text-center border-end border-warning"
+            className=" text-center border-end border-3 border-warning"
           >
             <Lightbulb className=" fs-1 my-3 text-warning" />
             <Link
@@ -29,7 +29,7 @@ const Steps = () => {
           <Col
             xs={12}
             md={4}
-            className=" text-center border-end border-warning"
+            className=" text-center border-end border-3 border-warning"
           >
             <Sliders className=" fs-1 my-3 text-warning" />
             <Link

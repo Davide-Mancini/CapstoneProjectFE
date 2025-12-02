@@ -1,98 +1,81 @@
+import { Facebook, Instagram, Tiktok, X } from "react-bootstrap-icons";
+
 const MyFooter = () => {
   const anno = new Date();
   return (
     <>
-      <div className="container mt-auto text-light">
+      <div className="container mt-auto text-light ">
         <footer className="py-5">
           <div className="row ">
             <div className="col-6 col-md-2 mb-3">
-              <h5>Section</h5>
+              <h5>Sezioni</h5>
               <ul className="nav flex-column">
                 <li className="nav-item mb-2 ">
                   <a href="#" className="nav-link p-0 text-light">
-                    Home
+                    Homepage
                   </a>
                 </li>
                 <li className="nav-item mb-2 ">
                   <a href="#" className="nav-link p-0 text-light">
-                    Features
+                    Nuova Asta
                   </a>
                 </li>
                 <li className="nav-item mb-2 ">
                   <a href="#" className="nav-link p-0 text-light">
-                    Pricing
+                    Strategie
                   </a>
                 </li>
                 <li className="nav-item mb-2 ">
                   <a href="#" className="nav-link p-0 text-light">
-                    FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2 ">
-                  <a href="#" className="nav-link p-0 text-light">
-                    About
+                    Notizie
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="col-6 col-md-2 mb-3  text-light">
-              <h5>Section</h5>
+              <h5>Social</h5>
               <ul className="nav flex-column">
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0  text-light">
-                    Home
+                    <Facebook /> Facebook
                   </a>
                 </li>
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0  text-light">
-                    Features
+                    <Instagram /> Instragram
                   </a>
                 </li>
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0  text-light">
-                    Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
-                    FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
-                    About
+                    <Tiktok /> Tiktok
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="col-6 col-md-2 mb-3 text-light">
-              <h5>Section</h5>
+              <h5>Chi siamo</h5>
               <ul className="nav flex-column">
                 <li className="nav-item mb-2">
                   <a href="#" className="nav-link p-0  text-light">
-                    Home
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
-                    Features
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
-                    Pricing
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
-                    FAQs
-                  </a>
-                </li>
-                <li className="nav-item mb-2">
-                  <a href="#" className="nav-link p-0  text-light">
                     About
+                  </a>
+                </li>
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0  text-light">
+                    Termini & condizioni
+                  </a>
+                </li>
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0  text-light">
+                    Abbonamento
+                  </a>
+                </li>
+
+                <li className="nav-item mb-2">
+                  <a href="#" className="nav-link p-0  text-light">
+                    Collaborazioni
                   </a>
                 </li>
               </ul>
@@ -112,7 +95,7 @@ const MyFooter = () => {
                   <input
                     id="newsletter1"
                     type="text"
-                    className="form-control"
+                    className="form-control shadow-none"
                     placeholder="Email"
                   />
                   <button
@@ -127,7 +110,7 @@ const MyFooter = () => {
           </div>
 
           <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p>© {anno.getFullYear()} Asta Tool, all rights reserved.</p>
+            <p>© {anno.getFullYear()} FantaHub, all rights reserved.</p>
             <ul className="list-unstyled d-flex">
               <li className="ms-3">
                 <a className="link-dark" href="#"></a>

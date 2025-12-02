@@ -18,28 +18,39 @@ function Mycarousel() {
     return state.news.news;
   });
   return (
-    <Container className=" border rounded-5 text-light my-5 gradienteDiSfondo ">
-      <Row>
-        <Col xs={12} className=" p-5">
-          <Carousel fade className=" w-100 mx-auto p-4">
-            {/* MAP DELLE NOTIZIE FORNITE DA GAZZETTA */}
-            {news.map((singleNews, id) => (
-              <Carousel.Item interval={7000} key={id}>
-                <img
-                  src={singleNews?.thumbnail}
-                  alt=""
-                  className=" w-100 mx-auto rounded-4"
-                />
-                <Carousel.Caption>
-                  <h3>{singleNews?.title}</h3>
-                  <p>{singleNews?.description}</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <div
+        className=" border border-3 rounded-4 border-warning w-25 mx-auto text-light"
+        style={{ marginTop: "100px" }}
+      >
+        <h1 className=" text-center fw-bold">Sala Stampa</h1>
+      </div>
+      <Container
+        style={{ marginBottom: "180px" }}
+        className=" border border-warning border-3 rounded-5 text-light mt-4  gradienteDiSfondo p-5 w-50 "
+      >
+        <Row>
+          <Col xs={12} className=" p-3">
+            <Carousel fade className=" w-100 mx-auto p-4">
+              {/* MAP DELLE NOTIZIE FORNITE DA GAZZETTA */}
+              {news.map((singleNews, id) => (
+                <Carousel.Item interval={7000} key={id}>
+                  <img
+                    src={singleNews?.thumbnail}
+                    alt=""
+                    className=" w-100 mx-auto rounded-4"
+                  />
+                  <Carousel.Caption>
+                    <h3>{singleNews?.title}</h3>
+                    <p>{singleNews?.description}</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }
 

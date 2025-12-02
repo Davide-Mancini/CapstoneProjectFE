@@ -33,9 +33,10 @@ const HeroSection = () => {
             />
 
             <p className=" lead text-light">
-              Organizza la tua asta nel modo perfetto, con FantaHub puoi gestire
-              la tua asta online in modo semplice! Pensa ad una strategia, crea
-              l'asta, invita i tuoi amici e inizia a rilanciare il tuo giocatore
+              Organizza la tua asta nel modo perfetto, con{" "}
+              <span className=" fw-bold">FantaHub</span> puoi gestire la tua
+              asta online in modo semplice! Pensa ad una strategia, crea l'asta,
+              invita i tuoi amici e inizia a rilanciare il tuo giocatore
               preferito!
             </p>
             <div className="d-grid gap-2 d-md-flex justify-content-md-center">
