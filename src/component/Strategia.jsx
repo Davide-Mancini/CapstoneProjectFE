@@ -372,7 +372,7 @@ const Strategia = () => {
     <>
       <div className=" d-flex justify-content-center">
         <PillNav
-          logo={"src/assets/fire.svg"}
+          logo={"public/fire.svg"}
           logoAlt="Company Logo"
           items={[
             { label: "ASTA", href: "/impostazioni-asta" },

@@ -4,7 +4,6 @@ import Mycarousel from "./myCarousel";
 import MyFooter from "./myFooter";
 import PillNav from "./PillNav/PillNav";
 import Steps from "./steps";
-import "../assets/fire.svg";
 import RegisterButton from "./registerButton";
 import SignInButton from "./signInButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,7 +92,7 @@ const HomePage = () => {
       <div className=" d-flex justify-content-center">
         {/* NAVBAR DI REACT BITS */}
         <PillNav
-          logo={"src/assets/fire.svg"}
+          logo={"public/fire.svg"}
           logoAlt="Company Logo"
           items={[
             { label: "ASTA", href: "/impostazioni-asta" },
