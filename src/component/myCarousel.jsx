@@ -5,6 +5,7 @@ import "../style/carousel.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getNewsAction } from "../redux/actions/getNewsActions";
 import "../style/fireworks.css";
+import { Link } from "react-router-dom";
 // INSERISCO UN CAROSELLO CON DELLE NOTIZIE SULLA SERIE A AGGIORNATE TRAMITE UN RSS DELLA GAZZETTA DELLO SPORT
 function Mycarousel() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ function Mycarousel() {
         className=" border border-3 rounded-4 border-warning w-25 mx-auto text-light"
         style={{ marginTop: "100px" }}
       >
-        <h1 className=" text-center fw-bold">Sala Stampa</h1>
+        <h1 className=" text-center fw-bold">Flash News</h1>
       </div>
       <Container
         style={{ marginBottom: "180px" }}
@@ -41,8 +42,13 @@ function Mycarousel() {
                     className=" w-100 mx-auto rounded-4"
                   />
                   <Carousel.Caption>
-                    <h3>{singleNews?.title}</h3>
-                    <p>{singleNews?.description}</p>
+                    <Link
+                      to={"/campetto"}
+                      className=" text-decoration-none text-light"
+                    >
+                      <h3>{singleNews?.title}</h3>
+                    </Link>
+                    {/* <p>{singleNews?.description}</p> */}
                   </Carousel.Caption>
                 </Carousel.Item>
               ))}
