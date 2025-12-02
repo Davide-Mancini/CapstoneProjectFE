@@ -117,7 +117,9 @@ const Asta = () => {
     //Se dettagliAstaRecuperata?.id o user?.id non sono presenti fermo subito l'esecuzione
     if (!dettagliAstaRecuperata?.id || !user?.id) return;
     //Passato il controllo definisco un nuovo SockJS indicando l'endpoint definito nella configurazione del WS nel Back-End
-    const socket = new SockJS("https://fantahub-red.vercel.app/ws");
+    const socket = new SockJS(
+      "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/ws"
+    );
     const client = over(socket);
     client.debug = (str) => console.log("STOMP: " + str);
     //Effettua la connessione
