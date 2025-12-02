@@ -26,7 +26,7 @@ const ImpostazioniAsta = () => {
     setLoadingStrategie(true);
     try {
       const response = await fetch(
-        "rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie",
+        "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie",
         {
           method: "GET",
           headers: {

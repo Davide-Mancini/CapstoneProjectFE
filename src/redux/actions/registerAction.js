@@ -3,7 +3,7 @@ export const FAILED = "FAILED";
 export const register = (nome, cognome, username, email, password) => {
   return async (dispatch) => {
     await fetch(
-      "rich-del-davide-mancini-9aa8ac64.koyeb.app/auth/registrazione",
+      "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/auth/registrazione",
       {
         method: "POST",
         body: JSON.stringify({ nome, cognome, username, email, password }),

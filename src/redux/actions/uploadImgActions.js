@@ -3,12 +3,15 @@ export const uploadImg = (file) => {
   return async (dispatch) => {
     const formData = new FormData();
     formData.append("avatar", file);
-    await fetch("rich-del-davide-mancini-9aa8ac64.koyeb.app/users/me/avatar", {
-      method: "PATCH",
-      body: formData,
+    await fetch(
+      "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/users/me/avatar",
+      {
+        method: "PATCH",
+        body: formData,
 
-      credentials: "include",
-    })
+        credentials: "include",
+      }
+    )
       .then((res) => {
         if (res.ok) {
           return res.json();

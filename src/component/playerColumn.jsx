@@ -59,7 +59,7 @@ const PlayerColumn = ({
     const caricaDatiIniziali = async () => {
       try {
         const response = await fetch(
-          `rich-del-davide-mancini-9aa8ac64.koyeb.app/api/rosa/utente/${utenteId}/sessione/${dettagliAsta.id}`
+          `https://rich-del-davide-mancini-9aa8ac64.koyeb.app/api/rosa/utente/${utenteId}/sessione/${dettagliAsta.id}`
         );
         const data = await response.json();
 

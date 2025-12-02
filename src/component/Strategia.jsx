@@ -252,7 +252,7 @@ const Strategia = () => {
 
     try {
       const response = await fetch(
-        "rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie",
+        "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie",
         {
           method: "GET",
           headers: {
@@ -307,7 +307,7 @@ const Strategia = () => {
     }
 
     console.log("Payload da inviare:", strategiaPayload);
-    fetch("rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie", {
+    fetch("https://rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -351,7 +351,7 @@ const Strategia = () => {
 
     try {
       const response = await fetch(
-        `rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie/${strategiaId}`,
+        `https://rich-del-davide-mancini-9aa8ac64.koyeb.app/strategie/${strategiaId}`,
         options
       );
 

@@ -2,7 +2,7 @@ export const GET_ASTA_CALCIATORE_BY_ID = "GET_ASTA_CALCIATORE_BY_ID";
 export const getAstaCalciatoreById = (id) => {
   return async (dispatch) => {
     await fetch(
-      `rich-del-davide-mancini-9aa8ac64.koyeb.app/astacalciatore/${id}`
+      `https://rich-del-davide-mancini-9aa8ac64.koyeb.app/astacalciatore/${id}`
     )
       .then((res) => {
         if (res.ok) {

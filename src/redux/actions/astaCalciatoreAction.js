@@ -2,7 +2,7 @@ export const ASTA_CALCIATORE = "ASTA_CALCIATORE";
 export const astaCalciatoreAction = (calciatore, asta) => {
   return async (dispatch) => {
     await fetch(
-      "rich-del-davide-mancini-9aa8ac64.koyeb.app/astacalciatore/nuova-asta",
+      "https://rich-del-davide-mancini-9aa8ac64.koyeb.app/astacalciatore/nuova-asta",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

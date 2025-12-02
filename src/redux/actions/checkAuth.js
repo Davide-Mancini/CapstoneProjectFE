@@ -4,7 +4,7 @@ export const CHECK_AUTH = "CHECK_AUTH";
 
 export const checkAuth = () => {
   return async (dispatch) => {
-    fetch("rich-del-davide-mancini-9aa8ac64.koyeb.app/auth/me", {
+    fetch("https://rich-del-davide-mancini-9aa8ac64.koyeb.app/auth/me", {
       method: "GET",
       credentials: "include",
     })
