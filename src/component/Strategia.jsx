@@ -316,7 +316,7 @@ const Strategia = () => {
         return res.json();
       })
       .then((data) => {
-        alert(`Strategia '${data.nome}' salvata con successo!`);
+        console.log(data);
         setGiocatoriMiPiace([]);
         setNomeStrategia("");
         setAppunti("");
@@ -431,7 +431,7 @@ const Strategia = () => {
               className=" text-light fw-bold rounded-pill mb-1"
               onClick={() => setShowSaveModal(true)}
             >
-              Crea Strategia <span>+</span>
+              Salva Strategia <span>+</span>
             </Button>
             {loadingStrategie ? (
               <p>Caricamento strategie salvate...</p>
@@ -440,12 +440,17 @@ const Strategia = () => {
                 className=" bg-warning rounded-pill  text-light text-center fw-bold border-0"
                 onChange={(e) => fetchStrategiaById(e.target.value)}
                 defaultValue=""
+                style={{ cursor: "pointer" }}
               >
-                <option value="" disabled>
+                <option value="" disabled className=" text-black bg-light">
                   Seleziona strategia
                 </option>
                 {listaStrategie.map((s) => (
-                  <option key={s.id} value={s.id}>
+                  <option
+                    key={s.id}
+                    value={s.id}
+                    className=" text-black bg-light "
+                  >
                     {s.nome} (Budget: {s.budget})
                   </option>
                 ))}
